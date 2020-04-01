@@ -1,6 +1,4 @@
-@file:Suppress("DEPRECATION", "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS",
-    "USELESS_IS_CHECK"
-)
+@file:Suppress("DEPRECATION")
 
 package com.meksconway.areyouexpert.util
 
@@ -8,10 +6,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 
 fun isNetworkAvaible(): Boolean {
-    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE)
     return if (connectivityManager is ConnectivityManager){
         val networkInfo = connectivityManager.activeNetworkInfo
-        networkInfo.isConnected
+        return true == networkInfo?.isConnected
     } else false
 }
 fun getSystemService(service: String): Any {
