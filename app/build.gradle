@@ -19,9 +19,22 @@ android {
         multiDexEnabled = true
     }
     buildTypes {
+
+        beta {
+            minifyEnabled false
+            buildConfigField "String", "TRIVIA_BASE_URL", "https://opentdb.com/"
+
+        }
+
+        debug {
+            minifyEnabled false
+            buildConfigField "String", "TRIVIA_BASE_URL", "https://opentdb.com/"
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "TRIVIA_BASE_URL", "https://opentdb.com/"
         }
     }
     compileOptions {
