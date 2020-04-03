@@ -1,10 +1,11 @@
 package com.meksconway.areyouexpert.home
 
 import android.app.Activity
-import com.meksconway.areyouexpert.base.BaseActivity
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.meksconway.areyouexpert.R
+import com.meksconway.areyouexpert.ui.view.NoConnectionDialog
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : Activity() {
 
@@ -13,7 +14,6 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         val bottomNavigation : BottomNavigationView = findViewById(R.id.btm_nav_bar)
-
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when(item.itemId){
 
@@ -22,6 +22,10 @@ class MainActivity : Activity() {
             }
             true
 
+        }
+        btn_test.setOnClickListener {
+            val dialog = NoConnectionDialog(this)
+            dialog.show()
         }
     }
 
