@@ -1,4 +1,4 @@
-package com.meksconway.areyouexpert.data.local.entity
+package com.meksconway.areyouexpert.data.service.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

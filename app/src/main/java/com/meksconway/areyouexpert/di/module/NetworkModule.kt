@@ -1,7 +1,7 @@
 package com.meksconway.areyouexpert.di.module
 
 import com.meksconway.areyouexpert.BuildConfig
-import com.meksconway.areyouexpert.data.remote.TriviaApiService
+import com.meksconway.areyouexpert.data.service.remote.TriviaApiService
 import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers

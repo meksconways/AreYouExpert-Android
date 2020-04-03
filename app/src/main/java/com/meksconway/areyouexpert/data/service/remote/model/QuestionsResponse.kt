@@ -1,4 +1,4 @@
-package com.meksconway.areyouexpert.data.remote.model
+package com.meksconway.areyouexpert.data.service.remote.model
 
 import com.google.gson.annotations.SerializedName
 

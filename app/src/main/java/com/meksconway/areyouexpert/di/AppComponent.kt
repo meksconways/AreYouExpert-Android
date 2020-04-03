@@ -2,10 +2,7 @@ package com.meksconway.areyouexpert.di
 
 import android.app.Application
 import com.meksconway.areyouexpert.base.App
-import com.meksconway.areyouexpert.di.module.ActivityBuildersModule
-import com.meksconway.areyouexpert.di.module.AppModule
-import com.meksconway.areyouexpert.di.module.NetworkModule
-import com.meksconway.areyouexpert.di.module.RoomModule
+import com.meksconway.areyouexpert.di.module.*
 import com.meksconway.areyouexpert.viewmodel.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
@@ -21,7 +18,8 @@ import javax.inject.Singleton
         ViewModelModule::class,
         NetworkModule::class,
         AppModule::class,
-        RoomModule::class
+        RoomModule::class,
+        DataSourceModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {
