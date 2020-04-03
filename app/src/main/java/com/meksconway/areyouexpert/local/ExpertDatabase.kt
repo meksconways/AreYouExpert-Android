@@ -3,10 +3,14 @@ package com.meksconway.areyouexpert.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.meksconway.areyouexpert.local.entity.QuestionEntity
 import com.meksconway.areyouexpert.local.entity.QuizCategoryEntity
 
 @Database(
-    entities = [QuizCategoryEntity::class],
+    entities = [
+        QuizCategoryEntity::class,
+        QuestionEntity::class
+    ],
     version = 1,
     exportSchema = false
 )

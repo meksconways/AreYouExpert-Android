@@ -6,7 +6,7 @@ import com.meksconway.areyouexpert.data.QuizCategoryGradientType
 
 @Entity(tableName = "quiz_category")
 data class QuizCategoryEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id: Int,
     val progress: Int,
     val name: String,

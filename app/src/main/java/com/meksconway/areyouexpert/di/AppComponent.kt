@@ -6,7 +6,7 @@ import com.meksconway.areyouexpert.di.module.ActivityBuildersModule
 import com.meksconway.areyouexpert.di.module.AppModule
 import com.meksconway.areyouexpert.di.module.NetworkModule
 import com.meksconway.areyouexpert.di.module.RoomModule
-import com.meksconway.areyouexpert.viewmodel.ViewModelFactoryModule
+import com.meksconway.areyouexpert.viewmodel.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -18,7 +18,7 @@ import javax.inject.Singleton
     modules = [
         AndroidSupportInjectionModule::class,
         ActivityBuildersModule::class,
-        ViewModelFactoryModule::class,
+        ViewModelModule::class,
         NetworkModule::class,
         AppModule::class,
         RoomModule::class
