@@ -1,8 +1,8 @@
-package com.meksconway.areyouexpert.remote
+package com.meksconway.areyouexpert.data.remote
 
-import com.meksconway.areyouexpert.data.triviamodel.QuestionsResponse
-import com.meksconway.areyouexpert.data.triviamodel.QuizCategoryResponse
-import com.meksconway.areyouexpert.data.triviamodel.TokenGenerateResponse
+import com.meksconway.areyouexpert.data.remote.model.QuestionsResponse
+import com.meksconway.areyouexpert.data.remote.model.QuizCategoryResponse
+import com.meksconway.areyouexpert.data.remote.model.TokenGenerateResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path

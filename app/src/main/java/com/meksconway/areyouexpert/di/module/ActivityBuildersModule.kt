@@ -1,6 +1,6 @@
 package com.meksconway.areyouexpert.di.module
 
-import com.meksconway.areyouexpert.home.MainActivity
+import com.meksconway.areyouexpert.ui.activity.main.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

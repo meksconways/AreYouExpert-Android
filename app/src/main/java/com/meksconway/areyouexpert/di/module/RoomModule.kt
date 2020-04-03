@@ -2,7 +2,7 @@ package com.meksconway.areyouexpert.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.meksconway.areyouexpert.local.ExpertDatabase
+import com.meksconway.areyouexpert.data.local.ExpertDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -1,4 +1,4 @@
-package com.meksconway.areyouexpert.data.triviamodel
+package com.meksconway.areyouexpert.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 

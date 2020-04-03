@@ -1,4 +1,4 @@
-package com.meksconway.areyouexpert.local
+package com.meksconway.areyouexpert.data.local
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

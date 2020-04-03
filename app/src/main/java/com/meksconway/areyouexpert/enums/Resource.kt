@@ -1,4 +1,4 @@
-package com.meksconway.areyouexpert.domain
+package com.meksconway.areyouexpert.enums
 
 sealed class Resource<T>(
     val data: T? = null,

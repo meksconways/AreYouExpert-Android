@@ -1,4 +1,4 @@
-package com.meksconway.areyouexpert.base
+package com.meksconway.areyouexpert.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,7 +17,8 @@ interface IBaseViewModel<I : Input, O : Output> {
     val output: O
 }
 
-abstract class BaseViewModel<I : Input, O : Output> : ViewModel(), IBaseViewModel<I, O> {
+abstract class BaseViewModel<I : Input, O : Output> : ViewModel(),
+    IBaseViewModel<I, O> {
 
     val compositeDisposable = CompositeDisposable()
 

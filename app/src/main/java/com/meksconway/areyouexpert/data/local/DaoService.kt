@@ -1,8 +1,8 @@
-package com.meksconway.areyouexpert.local
+package com.meksconway.areyouexpert.data.local
 
 import androidx.room.*
-import com.meksconway.areyouexpert.local.entity.QuestionEntity
-import com.meksconway.areyouexpert.local.entity.QuizCategoryEntity
+import com.meksconway.areyouexpert.data.local.entity.QuestionEntity
+import com.meksconway.areyouexpert.data.local.entity.QuizCategoryEntity
 import io.reactivex.Single
 
 @Dao

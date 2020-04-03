@@ -1,8 +1,7 @@
-package com.meksconway.areyouexpert.local.entity
+package com.meksconway.areyouexpert.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.meksconway.areyouexpert.enums.QuestionType
 
 @Entity(tableName = "questions_table")
 data class QuestionEntity(

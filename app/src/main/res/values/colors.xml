@@ -11,4 +11,7 @@
     <color name="lightBlueColor">#80d8ff</color>
     <color name="darkTextColor">#212121</color>
     <color name="greyTextColor">#545454</color>
+
+    <color name="appBackground">#484848</color>
+    <color name="appToolbarBackground">#505050</color>
 </resources>
