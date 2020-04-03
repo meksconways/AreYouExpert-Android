@@ -3,15 +3,101 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="redColor">#D50000</color>
-    <color name="yellowColor">#ffff00</color>
-    <color name="greenColor">#69f0ae</color>
-    <color name="blackColor">#000000</color>
-    <color name="whiteColor">#f5f5f5</color>
-    <color name="lightBlueColor">#80d8ff</color>
     <color name="darkTextColor">#212121</color>
     <color name="greyTextColor">#545454</color>
 
     <color name="appBackground">#484848</color>
     <color name="appToolbarBackground">#505050</color>
+
+    <color name="catGeneralPrimaryColor">#ff1744</color>
+    <color name="catGeneralLightColor">#ff616f</color>
+    <color name="catGeneralDarkColor">#c4001d</color>
+    
+    <color name="catBooksPrimaryColor">#f50057</color>
+    <color name="catBooksLightColor">#ff5983</color>
+    <color name="catBooksDarkColor">#bb002f</color>
+    
+    <color name="catFilmPrimaryColor">#d500f9</color>
+    <color name="catFilmLightColor">#ff5bff</color>
+    <color name="catFilmDarkColor">#9e00c5</color>
+
+    <color name="catMusicPrimaryColor">#651fff</color>
+    <color name="catMusicLightColor">#a255ff</color>
+    <color name="catMusicDarkColor">#0100ca</color>
+
+    <color name="catMusicalAndTheatresPrimaryColor">#3d5afe</color>
+    <color name="catMusicalAndTheatresLightColor">#8187ff</color>
+    <color name="catMusicalAndTheatresDarkColor">#0031ca</color>
+
+    <color name="catTelevisionPrimaryColor">#2979ff</color>
+    <color name="catTelevisionLightColor">#75a7ff</color>
+    <color name="catTelevisionDarkColor">#004ecb</color>
+
+    <color name="catVideoGamesPrimaryColor">#00b0ff</color>
+    <color name="catVideoGamesLightColor">#69e2ff</color>
+    <color name="catVideoGamesDarkColor">#0081cb</color>
+
+    <color name="catBoardGamesPrimaryColor">#00e5ff</color>
+    <color name="catBoardGamesLightColor">#6effff</color>
+    <color name="catBoardGamesDarkColor">#00b2cc</color>
+
+    <color name="catScienceAndNaturePrimaryColor">#00e676</color>
+    <color name="catScienceAndNatureLightColor">#66ffa6</color>
+    <color name="catScienceAndNatureDarkColor">#00b248</color>
+
+    <color name="catComputersPrimaryColor">#76ff03</color>
+    <color name="catComputersLightColor">#b0ff57</color>
+    <color name="catComputersDarkColor">#32cb00</color>
+
+    <color name="catMathematicsPrimaryColor">#c6ff00</color>
+    <color name="catMathematicsLightColor">#fdff58</color>
+    <color name="catMathematicsDarkColor">#90cc00</color>
+
+    <color name="catMythologyPrimaryColor">#ffea00</color>
+    <color name="catMythologyLightColor">#ffff56</color>
+    <color name="catMythologyDarkColor">#c7b800</color>
+
+    <color name="catSportsPrimaryColor">#ff6f00</color>
+    <color name="catSportsLightColor">#ffa040</color>
+    <color name="catSportsDarkColor">#c43e00</color>
+
+    <color name="catGeographyPrimaryColor">#e65100</color>
+    <color name="catGeographyLightColor">#ff833a</color>
+    <color name="catGeographyDarkColor">#ac1900</color>
+
+    <color name="catHistoryPrimaryColor">#ff3d00</color>
+    <color name="catHistoryLightColor">#ff7539</color>
+    <color name="catHistoryDarkColor">#c30000</color>
+
+    <color name="catPoliticsPrimaryColor">#1976d2</color>
+    <color name="catPoliticsLightColor">#63a4ff</color>
+    <color name="catPoliticsDarkColor">#004ba0</color>
+
+    <color name="catArtPrimaryColor">#e91e63</color>
+    <color name="catArtLightColor">#ff6090</color>
+    <color name="catArtDarkColor">#b0003a</color>
+
+    <color name="catAnimalsPrimaryColor">#00c853</color>
+    <color name="catAnimalsLightColor">#5efc82</color>
+    <color name="catAnimalsDarkColor">#009624</color>
+
+    <color name="catVehiclesPrimaryColor">#00bcd4</color>
+    <color name="catVehiclesLightColor">#62efff</color>
+    <color name="catVehiclesDarkColor">#008ba3</color>
+
+    <color name="catComicsPrimaryColor">#ffff00</color>
+    <color name="catComicsLightColor">#ffff5a</color>
+    <color name="catComicsDarkColor">#c7cc00</color>
+
+    <color name="catGadgetsPrimaryColor">#64dd17</color>
+    <color name="catGadgetsLightColor">#9cff57</color>
+    <color name="catGadgetsDarkColor">#1faa00</color>
+
+    <color name="catJapanJapaneseAnimeAndMangaPrimaryColor">#aa00ff</color>
+    <color name="catJapanJapaneseAnimeAndMangaLightColor">#e254ff</color>
+    <color name="catJapanJapaneseAnimeAndMangaDarkColor">#7200ca</color>
+
+    <color name="catCartoonAndAnimationsPrimaryColor">#b2ff59</color>
+    <color name="catCartoonAndAnimationsLightColor">#e7ff8c</color>
+    <color name="catCartoonAndAnimationsDarkColor">#7ecb20</color>
 </resources>
