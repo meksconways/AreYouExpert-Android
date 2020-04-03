@@ -1,3 +1,3 @@
-package com.meksconway.areyouexpert.data
+package com.meksconway.areyouexpert.common
 
 data class QuizCategoryGradientType(val startColor: Int, val endColor: Int)

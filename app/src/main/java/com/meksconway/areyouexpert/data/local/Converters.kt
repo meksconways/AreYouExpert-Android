@@ -3,7 +3,7 @@ package com.meksconway.areyouexpert.data.local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.meksconway.areyouexpert.data.QuizCategoryGradientType
+import com.meksconway.areyouexpert.common.QuizCategoryGradientType
 
 class Converters {
 
