@@ -3,6 +3,7 @@ package com.meksconway.areyouexpert.domain.usecase
 import androidx.annotation.DrawableRes
 import androidx.lifecycle.MutableLiveData
 import com.meksconway.areyouexpert.R
+import com.meksconway.areyouexpert.common.Decider
 import com.meksconway.areyouexpert.common.QuizCategoryResources
 import com.meksconway.areyouexpert.data.service.local.entity.QuizCategoryEntity
 import com.meksconway.areyouexpert.data.service.remote.model.QuizCategories
@@ -95,38 +96,13 @@ fun List<QuizCategoryEntity>.mapToCategory(): List<CategoriesModel> {
 }
 
 fun QuizCategoryEntity.mapToCategoriesModel(): CategoriesModel {
-    return CategoriesModel(id, progress, name, Decider.getResId(id))
+    return CategoriesModel(id, progress, name, Decider.getCategoryResources(id))
 }
 
 fun QuizCategories.mapToEntity(): QuizCategoryEntity {
     return QuizCategoryEntity(id = this.id, name = name, progress = 0)
 }
 
-enum class CategoryResIdAndGradient(
-    val resources: QuizCategoryResources
-) {
-    GENERAL(
-        resources =
-        QuizCategoryResources(
-            R.drawable.ic_action_fav,
-            R.color.catAnimalsPrimaryColor,
-            R.color.catGeneralLightColor,
-            R.color.catGeneralDarkColor
-        )
-    )
-}
-
-
-object Decider {
-
-    fun getResId(id: Int): QuizCategoryResources {
-        return when (id) {
-            0 -> CategoryResIdAndGradient.GENERAL.resources
-            else -> CategoryResIdAndGradient.GENERAL.resources
-        }
-    }
-
-}
 
 
 data class CombineHomeData(
