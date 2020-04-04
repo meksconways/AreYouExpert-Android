@@ -20,7 +20,9 @@ class HomeUseCase
 @Inject constructor(private val repository: HomeRepository) {
 
     private var compositeDisposable: CompositeDisposable? = null
-    private lateinit var homeContent: CombineHomeData
+    private var homeContent: CombineHomeData = CombineHomeData(
+        createBanner(),createTitle(), arrayListOf()
+    )
 
     fun getHomeData(
         source: MutableLiveData<Resource<CombineHomeData>>,
@@ -28,13 +30,11 @@ class HomeUseCase
     ) {
         this.compositeDisposable = compositeDisposable
         source.value = Resource.Loading()
-        homeContent.banner = createBanner()
-        homeContent.titleModel = createTitle()
         compositeDisposable.add(
             repository.getRemoteCategories()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext {
-                    source.value = fetchLocaleCategories(it)
+                    fetchLocaleCategories(it,source)
                 }
                 .doOnError {
                     source.value = Resource.Error(it.message ?: "An error occurred")
@@ -47,25 +47,29 @@ class HomeUseCase
         return TitleModel(title = "Categories")
     }
 
-    private fun fetchLocaleCategories(response: List<QuizCategories>): Resource<CombineHomeData> {
+    private fun fetchLocaleCategories(response: List<QuizCategories>,
+                                      source: MutableLiveData<Resource<CombineHomeData>>) {
         compositeDisposable?.add(
             repository.getLocalCategories()
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext {
                     if (it.isNullOrEmpty()) {
                         repository.insertCategoryList(response.mapToEntity())
                         homeContent.categoriesModel = response.mapToCategoryModel()
+                        source.value = Resource.Success(homeContent)
                     } else {
                         homeContent.categoriesModel = it.mapToCategory()
+                        source.value = Resource.Success(homeContent)
                     }
                 }
                 .doOnError {
                     repository.insertCategoryList(response.mapToEntity())
                     homeContent.categoriesModel = response.mapToCategoryModel()
+                    source.value = Resource.Success(homeContent)
                 }
                 .subscribe()
         )
-
-        return Resource.Success(homeContent)
+        
 
     }
 

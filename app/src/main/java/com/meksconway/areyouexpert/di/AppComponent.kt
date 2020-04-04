@@ -20,7 +20,8 @@ import javax.inject.Singleton
         AppModule::class,
         RoomModule::class,
         DataSourceModule::class,
-        RepositoryModule::class
+        RepositoryModule::class,
+        FragmentBuildersModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {

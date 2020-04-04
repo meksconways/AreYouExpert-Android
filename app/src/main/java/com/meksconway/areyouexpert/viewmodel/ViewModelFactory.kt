@@ -13,15 +13,14 @@ class ViewModelFactory
     Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val creator = viewModels[modelClass] ?: viewModels.entries.firstOrNull {
-            modelClass.isAssignableFrom(it.key)
-        }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
         try {
             @Suppress("UNCHECKED_CAST")
-            return creator.get() as T
+            return viewModels[modelClass]?.get() as T
+
         } catch (e: Exception) {
-            throw RuntimeException(e)
+            throw RuntimeException("Error Creating vm for class ${modelClass.simpleName}", e)
         }
     }
+
 
 }

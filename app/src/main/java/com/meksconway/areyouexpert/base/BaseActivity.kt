@@ -22,6 +22,7 @@ abstract class BaseActivity<I : Input, O : Output, VM : BaseViewModel<I, O>> :
     abstract fun observeViewModel(output: O)
 
 
+
     fun showWarningDialog() {
 
     }
