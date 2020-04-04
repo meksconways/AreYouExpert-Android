@@ -12,7 +12,10 @@ interface DaoService {
     fun getQuizList(): Single<List<QuizCategoryEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertQuizList(quizCategory: QuizCategoryEntity)
+    fun insertQuiz(quizCategory: QuizCategoryEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertQuizList(quizCategory: List<QuizCategoryEntity>)
 
     @Query("DELETE FROM quiz_category")
     fun deleteQuizList()

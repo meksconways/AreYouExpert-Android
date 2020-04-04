@@ -13,7 +13,11 @@ class RoomLocalDataSourceImpl
     override fun getQuizList(): Observable<List<QuizCategoryEntity>> = daoService
         .getQuizList().toObservable()
 
-    override fun insertQuizList(quizCategory: QuizCategoryEntity) {
+    override fun insertQuiz(quizCategory: QuizCategoryEntity) {
+        daoService.insertQuiz(quizCategory)
+    }
+
+    override fun insertQuizList(quizCategory: List<QuizCategoryEntity>) {
         daoService.insertQuizList(quizCategory)
     }
 

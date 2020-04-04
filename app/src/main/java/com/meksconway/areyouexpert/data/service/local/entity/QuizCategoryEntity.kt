@@ -8,6 +8,5 @@ data class QuizCategoryEntity(
     @PrimaryKey
     val id: Int,
     val progress: Int = 0,
-    val name: String,
-    val resId: String
+    val name: String
 )

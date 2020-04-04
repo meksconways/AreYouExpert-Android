@@ -16,19 +16,23 @@ class HomeRepositoryImpl
 ) : HomeRepository {
 
 
-    override fun getCategories(): Observable<List<QuizCategories>> {
+    override fun getRemoteCategories(): Observable<List<QuizCategories>> {
         return remoteDataSource.getCategories()
             .map {
                 it.categories
             }
     }
 
-    override fun getLocalCategories(response: List<QuizCategories>?): Observable<List<QuizCategoryEntity>> {
+    override fun getLocalCategories(): Observable<List<QuizCategoryEntity>> {
         return roomLocalDataSource.getQuizList()
             .subscribeOn(Schedulers.io())
     }
 
     override fun insertCategory(categoryEntity: QuizCategoryEntity) {
+        roomLocalDataSource.insertQuiz(categoryEntity)
+    }
+
+    override fun insertCategoryList(categoryEntity: List<QuizCategoryEntity>) {
         roomLocalDataSource.insertQuizList(categoryEntity)
     }
 
