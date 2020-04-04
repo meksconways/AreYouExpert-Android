@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/appToolbarBackground</item>
         <item name="android:windowBackground">@color/appBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/whiteColor</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
     </style>
 
     <style name="SplashTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">

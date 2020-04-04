@@ -8,6 +8,6 @@ data class QuizCategoryResponse(
 )
 
 data class QuizCategories(
-    val id: Int?,
-    val name: String?
+    val id: Int,
+    val name: String
 )
