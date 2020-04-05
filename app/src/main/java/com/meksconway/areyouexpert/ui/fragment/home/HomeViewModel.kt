@@ -1,7 +1,6 @@
 package com.meksconway.areyouexpert.ui.fragment.home
 
 import androidx.lifecycle.MutableLiveData
-import com.meksconway.areyouexpert.domain.usecase.CombineHomeData
 import com.meksconway.areyouexpert.domain.usecase.HomeContentModel
 import com.meksconway.areyouexpert.domain.usecase.HomeUseCase
 import com.meksconway.areyouexpert.enums.BannerCategory

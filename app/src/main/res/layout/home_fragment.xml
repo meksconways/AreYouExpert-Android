@@ -13,9 +13,26 @@
         android:background="@color/appToolbarBackground"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/appToolbarBackground"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvHome"
+            android:paddingTop="16dp"
+            android:clipToPadding="false"
+            />
+    </FrameLayout>
+
+
 
 
 </LinearLayout>

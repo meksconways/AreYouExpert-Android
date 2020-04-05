@@ -61,17 +61,14 @@ class HomeUseCase
                     if (it.isNullOrEmpty()) {
                         repository.insertCategoryList(response.mapToEntity())
                         homeContent.content.addAll(response.mapToCategoryModel())
-//                        homeContent.categoriesModel = response.mapToCategoryModel()
                         source.value = Resource.Success(homeContent)
                     } else {
                         homeContent.content.addAll(it.mapToCategory())
-//                        homeContent.categoriesModel = it.mapToCategory()
                         source.value = Resource.Success(homeContent)
                     }
                 }
                 .doOnError {
                     repository.insertCategoryList(response.mapToEntity())
-//                    homeContent.categoriesModel = response.mapToCategoryModel()
                     homeContent.content.addAll(response.mapToCategoryModel())
                     source.value = Resource.Success(homeContent)
                 }
@@ -86,7 +83,19 @@ class HomeUseCase
         arr.add(
             HomeBannerListModel(
                 bannerId = 0,
-                bannerImage = R.drawable.ic_action_fav,
+                bannerImage = R.drawable.welcome_image,
+                bannerGradient = R.drawable.gradient_flare,
+                bannerTitle = "Welcome To App",
+                category = BannerCategory.WELCOME
+
+            )
+        )
+        arr.add(
+            HomeBannerListModel(
+                bannerId = 1,
+                bannerImage = R.drawable.welcome_image,
+                bannerGradient = R.drawable.gredient_yoda,
+                bannerTitle = "Hey Man!",
                 category = BannerCategory.WELCOME
 
             )
@@ -121,11 +130,6 @@ data class HomeContentModel(
     var content: MutableList<HomeItemType>
 )
 
-data class CombineHomeData(
-    var banner: HomeBannerModel,
-    var titleModel: TitleModel,
-    var categoriesModel: CategoriesListModel
-)
 
 //***************** HOME BANNER ****************************
 data class HomeBannerModel(
@@ -139,6 +143,9 @@ data class HomeBannerListModel(
     val bannerId: Int,
     @DrawableRes
     val bannerImage: Int,
+    @DrawableRes
+    val bannerGradient: Int,
+    val bannerTitle: String,
     val category: BannerCategory
 )
 //***************** HOME BANNER ****************************
