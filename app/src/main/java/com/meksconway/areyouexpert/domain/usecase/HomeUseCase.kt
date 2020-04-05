@@ -108,11 +108,11 @@ fun List<QuizCategoryEntity>.mapToCategory(): List<CategoriesListModel> {
 }
 
 fun QuizCategoryEntity.mapToCategoriesModel(): CategoriesListModel {
-    return CategoriesListModel(id, progress, name, Decider.getCategoryResources(id))
+    return CategoriesListModel(Id, progress, name, Decider.getCategoryResources(Id))
 }
 
 fun QuizCategories.mapToEntity(): QuizCategoryEntity {
-    return QuizCategoryEntity(id = this.id, name = name, progress = 0)
+    return QuizCategoryEntity(Id = this.id, name = name, progress = 0)
 }
 
 
