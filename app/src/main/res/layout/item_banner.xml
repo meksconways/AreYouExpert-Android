@@ -8,10 +8,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_home_banner"
-        tools:itemCount="2"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="horizontal"
+        tools:listitem="@layout/item_category_view_home_content"
+        tools:itemCount="10"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:orientation="vertical"
+        app:spanCount="3"
         android:padding="16dp"
         android:clipChildren="false"
         />

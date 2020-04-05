@@ -3,6 +3,7 @@ package com.meksconway.areyouexpert.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.domain.usecase.*
@@ -34,12 +35,12 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             ContentItemType.TITLE.ordinal -> {
                 view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_category_view_home_content, parent, false)
+                    .inflate(R.layout.item_title_home_content, parent, false)
                 TitleViewHolder(view)
             }
             ContentItemType.BANNER.ordinal -> {
                 view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_category_view_home_content, parent, false)
+                    .inflate(R.layout.item_banner, parent, false)
                 BannerViewHolder(view)
             }
 
@@ -78,8 +79,12 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class TitleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         lateinit var model: TitleModel
+
+        private val titleText = itemView.findViewById<TextView>(R.id.txtTitle)
+
         fun bind(model: TitleModel) {
             this.model = model
+            titleText?.text = model.title
         }
 
     }
