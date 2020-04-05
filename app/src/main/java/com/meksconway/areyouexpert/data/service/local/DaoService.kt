@@ -1,6 +1,7 @@
 package com.meksconway.areyouexpert.data.service.local
 
 import androidx.room.*
+import com.meksconway.areyouexpert.data.service.local.entity.NotificationEntity
 import com.meksconway.areyouexpert.data.service.local.entity.QuestionEntity
 import com.meksconway.areyouexpert.data.service.local.entity.QuizCategoryEntity
 import io.reactivex.Single
@@ -20,6 +21,18 @@ interface DaoService {
     @Query("DELETE FROM quiz_category")
     fun deleteQuizList()
 
+    @Query("SELECT * FROM notification_table")
+    fun getNotificationList(): Single<List<NotificationEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertNotification(notification: NotificationEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertNotificationList(notification: List<NotificationEntity>)
+
+    @Query("DELETE FROM notification_table")
+    fun deleteNotificationList()
+
 //    @Query("SELECT * FROM questions_table")
 //    fun getQuestions(): Single<List<QuestionEntity>>
 
@@ -28,6 +41,7 @@ interface DaoService {
 
 //    @Query("DELETE FROM questions_table")
 //    fun deleteQuestions()
+
 
 
 
