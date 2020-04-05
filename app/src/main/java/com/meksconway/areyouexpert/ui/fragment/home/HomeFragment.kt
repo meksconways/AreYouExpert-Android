@@ -19,10 +19,7 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
 
     private val adapter = HomeContentAdapter()
 
-    override fun viewDidLoad() {
-        super.viewDidLoad()
-        adapter.setHasStableIds(true)
-    }
+    
 
     override fun observeViewModel(output: HomeViewModelOutput?) {
         output?.homeContentOutput?.observe(viewLifecycleOwner, Observer {
@@ -65,7 +62,6 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
                 }
             }
 
-            rvHome.recycledViewPool.setMaxRecycledViews(3, 20)
             rvHome?.setItemViewCacheSize(12)
             rvHome?.setHasFixedSize(true)
             rvHome?.adapter = adapter

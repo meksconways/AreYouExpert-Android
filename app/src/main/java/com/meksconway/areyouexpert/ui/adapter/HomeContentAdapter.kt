@@ -31,9 +31,6 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    override fun getItemId(position: Int): Long {
-        return contentData[position].getItemType().hashCode().toLong()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
