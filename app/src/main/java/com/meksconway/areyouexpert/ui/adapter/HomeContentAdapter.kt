@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -31,11 +33,15 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
+    override fun getItemId(position: Int): Long {
+        return contentData[position].getContentId().toLong()
+    }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val view: View
-        Log.d("***itemTypeOnCreate", viewType.toString())
         return when (viewType) {
 
             ContentItemType.CATEGORY.ordinal -> {
@@ -79,14 +85,13 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setItems(listItems: List<HomeItemType>?) {
-        this.contentData.clear()
-        Log.d("***listItems", listItems.toString())
         if (listItems != null) {
-            Log.d("***listItems", "not null")
-            this.contentData.addAll(listItems)
+            val diffCallback = HomeContentAdapterDiffUtil(contentData, listItems)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
+            contentData.clear()
+            contentData.addAll(listItems)
+            diffResult.dispatchUpdatesTo(this)
         }
-        Log.d("***listItems", "notify")
-        notifyDataSetChanged()
     }
 
 
@@ -134,26 +139,36 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         lateinit var model: CategoriesListModel
         private val titleText = itemView.findViewById<TextView>(R.id.txtCatTitle)
         private val catImage = itemView.findViewById<ImageView>(R.id.imgCategory)
+        private val catBackground = itemView.findViewById<ImageView>(R.id.imgCategoryBackground)
 
         fun bind(model: CategoriesListModel) {
             Log.d("***categoryVH", model.toString())
             this.model = model
-            Glide.with(itemView)
-                .asBitmap()
-                .load(model.resources.drawableRes)
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onLoadCleared(placeholder: Drawable?) {
-
-                    }
-
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        catImage.setImageBitmap(resource)
-                    }
-
-                })
+            catImage.setColorFilter(
+                ContextCompat.getColor(itemView.context, model.resources.darkColor),
+                android.graphics.PorterDuff.Mode.SRC_IN
+            )
+            catBackground.setColorFilter(
+                ContextCompat.getColor(itemView.context, model.resources.lightColor),
+                android.graphics.PorterDuff.Mode.SRC_IN
+            )
+            catImage.setImageResource(model.resources.drawableRes)
+//            Glide.with(itemView)
+//                .asBitmap()
+//                .load(model.resources.drawableRes)
+//                .into(object : CustomTarget<Bitmap>() {
+//                    override fun onLoadCleared(placeholder: Drawable?) {
+//
+//                    }
+//
+//                    override fun onResourceReady(
+//                        resource: Bitmap,
+//                        transition: Transition<in Bitmap>?
+//                    ) {
+//                        catImage.setImageBitmap(resource)
+//                    }
+//
+//                })
             titleText?.text = model.name
         }
 

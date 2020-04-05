@@ -2,13 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:paddingStart="8dp"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp"
+    >
 
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_semi_bold"
+        android:fontFamily="@font/opensans_bold"
         android:textColor="#fff"
         android:textSize="20sp" />
 

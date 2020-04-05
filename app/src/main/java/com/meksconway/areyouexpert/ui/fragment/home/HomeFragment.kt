@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
 import com.meksconway.areyouexpert.domain.usecase.ContentItemType
@@ -23,6 +24,7 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
         get() = R.layout.home_fragment
 
     private val adapter = HomeContentAdapter()
+    val pool = RecyclerView.RecycledViewPool()
 
 
     override val viewModel: HomeViewModel by viewModels {
@@ -62,19 +64,26 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
     }
 
     private fun setAdapter(listItems: HomeContentModel?) {
-
+        adapter.setHasStableIds(true)
         listItems?.content?.let { list ->
-            val layoutManager = GridLayoutManager(context, 3)
+            val layoutManager = GridLayoutManager(context, 2)
             layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when (list[position].getItemType()) {
-                        ContentItemType.BANNER -> 3
+                        ContentItemType.BANNER -> 2
                         ContentItemType.CATEGORY -> 1
-                        ContentItemType.TITLE -> 3
+                        ContentItemType.TITLE -> 2
                     }
                 }
             }
-
+//            rvHome?.apply {
+//                setItemViewCacheSize(15)
+//                setHasFixedSize(true)
+//                this.layoutManager = layoutManager
+//                adapter = adapter
+//
+//            }
+            rvHome.setRecycledViewPool(pool)
             rvHome?.setItemViewCacheSize(12)
             rvHome?.setHasFixedSize(true)
             rvHome?.adapter = adapter

@@ -1,4 +1,5 @@
 package com.meksconway.areyouexpert.domain.usecase
+
 import androidx.annotation.DrawableRes
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.common.Decider
@@ -128,9 +129,8 @@ data class HomeContentModel(
 data class HomeBannerModel(
     val banner: List<HomeBannerListModel>
 ) : HomeItemType {
-    override fun getItemType(): ContentItemType {
-        return ContentItemType.BANNER
-    }
+    override fun getItemType() = ContentItemType.BANNER
+    override fun getContentId() = 710
 }
 
 data class HomeBannerListModel(
@@ -146,9 +146,8 @@ data class HomeBannerListModel(
 
 //***************** TITLE **********************************
 data class TitleModel(val title: String) : HomeItemType {
-    override fun getItemType(): ContentItemType {
-        return ContentItemType.TITLE
-    }
+    override fun getItemType() = ContentItemType.TITLE
+    override fun getContentId() = title.length.hashCode()
 }
 //***************** TITLE **********************************
 
@@ -160,9 +159,8 @@ data class CategoriesListModel(
     val resources: QuizCategoryResources
 
 ) : HomeItemType {
-    override fun getItemType(): ContentItemType {
-        return ContentItemType.CATEGORY
-    }
+    override fun getItemType() = ContentItemType.CATEGORY
+    override fun getContentId() = id
 }
 
 enum class ContentItemType {
@@ -173,4 +171,5 @@ enum class ContentItemType {
 
 interface HomeItemType {
     fun getItemType(): ContentItemType
+    fun getContentId(): Int
 }
