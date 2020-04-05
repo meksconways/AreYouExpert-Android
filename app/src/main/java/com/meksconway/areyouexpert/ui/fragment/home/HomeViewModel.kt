@@ -2,6 +2,7 @@ package com.meksconway.areyouexpert.ui.fragment.home
 
 import androidx.lifecycle.MutableLiveData
 import com.meksconway.areyouexpert.domain.usecase.CombineHomeData
+import com.meksconway.areyouexpert.domain.usecase.HomeContentModel
 import com.meksconway.areyouexpert.domain.usecase.HomeUseCase
 import com.meksconway.areyouexpert.enums.BannerCategory
 import com.meksconway.areyouexpert.enums.Resource
@@ -22,7 +23,7 @@ interface HomeViewModelInput : Input {
 
 interface HomeViewModelOutput : Output {
 
-    val homeContentOutput: MutableLiveData<Resource<CombineHomeData>>
+    val homeContentOutput: MutableLiveData<Resource<HomeContentModel>>
 
 }
 
@@ -60,7 +61,7 @@ class HomeViewModel
     }
 
     //outputs
-    override val homeContentOutput = MutableLiveData<Resource<CombineHomeData>>()
+    override val homeContentOutput = MutableLiveData<Resource<HomeContentModel>>()
 
 
 

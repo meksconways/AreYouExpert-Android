@@ -25,17 +25,17 @@ class RoomLocalDataSourceImpl
         daoService.deleteQuizList()
     }
 
-    override fun getQuestions(): Observable<List<QuestionEntity>> = daoService
-        .getQuestions().toObservable()
-
-
-    override fun insertQuestion(question: QuestionEntity) {
-        daoService.insertQuestion(question)
-    }
-
-    override fun deleteQuestions() {
-        daoService.deleteQuestions()
-    }
+//    override fun getQuestions(): Observable<List<QuestionEntity>> = daoService
+//        .getQuestions().toObservable()
+//
+//
+//    override fun insertQuestion(question: QuestionEntity) {
+//        daoService.insertQuestion(question)
+//    }
+//
+//    override fun deleteQuestions() {
+//        daoService.deleteQuestions()
+//    }
 
 
 }

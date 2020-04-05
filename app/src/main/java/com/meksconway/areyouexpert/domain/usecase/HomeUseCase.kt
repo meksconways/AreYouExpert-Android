@@ -20,14 +20,19 @@ class HomeUseCase
 @Inject constructor(private val repository: HomeRepository) {
 
     private var compositeDisposable: CompositeDisposable? = null
-    private var homeContent: CombineHomeData = CombineHomeData(
-        createBanner(),createTitle(), arrayListOf()
-    )
+    private var homeContent = HomeContentModel(content = arrayListOf())
 
     fun getHomeData(
-        source: MutableLiveData<Resource<CombineHomeData>>,
+        source: MutableLiveData<Resource<HomeContentModel>>,
         compositeDisposable: CompositeDisposable
     ) {
+
+        homeContent.content.add(HomeBannerModel(
+            banner = createBanner()
+        ))
+        homeContent.content.add(createTitle())
+
+
         this.compositeDisposable = compositeDisposable
         source.value = Resource.Loading()
         compositeDisposable.add(
@@ -48,23 +53,26 @@ class HomeUseCase
     }
 
     private fun fetchLocaleCategories(response: List<QuizCategories>,
-                                      source: MutableLiveData<Resource<CombineHomeData>>) {
+                                      source: MutableLiveData<Resource<HomeContentModel>>) {
         compositeDisposable?.add(
             repository.getLocalCategories()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext {
                     if (it.isNullOrEmpty()) {
                         repository.insertCategoryList(response.mapToEntity())
-                        homeContent.categoriesModel = response.mapToCategoryModel()
+                        homeContent.content.addAll(response.mapToCategoryModel())
+//                        homeContent.categoriesModel = response.mapToCategoryModel()
                         source.value = Resource.Success(homeContent)
                     } else {
-                        homeContent.categoriesModel = it.mapToCategory()
+                        homeContent.content.addAll(it.mapToCategory())
+//                        homeContent.categoriesModel = it.mapToCategory()
                         source.value = Resource.Success(homeContent)
                     }
                 }
                 .doOnError {
                     repository.insertCategoryList(response.mapToEntity())
-                    homeContent.categoriesModel = response.mapToCategoryModel()
+//                    homeContent.categoriesModel = response.mapToCategoryModel()
+                    homeContent.content.addAll(response.mapToCategoryModel())
                     source.value = Resource.Success(homeContent)
                 }
                 .subscribe()
@@ -73,10 +81,10 @@ class HomeUseCase
 
     }
 
-    private fun createBanner(): List<HomeBannerModel> {
-        val arr = arrayListOf<HomeBannerModel>()
+    private fun createBanner(): List<HomeBannerListModel> {
+        val arr = arrayListOf<HomeBannerListModel>()
         arr.add(
-            HomeBannerModel(
+            HomeBannerListModel(
                 bannerId = 0,
                 bannerImage = R.drawable.ic_action_fav,
                 category = BannerCategory.WELCOME
@@ -91,16 +99,16 @@ fun List<QuizCategories>.mapToEntity(): List<QuizCategoryEntity> {
     return map { it.mapToEntity() }
 }
 
-fun List<QuizCategories>.mapToCategoryModel(): List<CategoriesModel> {
+fun List<QuizCategories>.mapToCategoryModel(): List<CategoriesListModel> {
     return map { it.mapToEntity().mapToCategoriesModel() }
 }
 
-fun List<QuizCategoryEntity>.mapToCategory(): List<CategoriesModel> {
+fun List<QuizCategoryEntity>.mapToCategory(): List<CategoriesListModel> {
     return map { it.mapToCategoriesModel() }
 }
 
-fun QuizCategoryEntity.mapToCategoriesModel(): CategoriesModel {
-    return CategoriesModel(id, progress, name, Decider.getCategoryResources(id))
+fun QuizCategoryEntity.mapToCategoriesModel(): CategoriesListModel {
+    return CategoriesListModel(id, progress, name, Decider.getCategoryResources(id))
 }
 
 fun QuizCategories.mapToEntity(): QuizCategoryEntity {
@@ -109,27 +117,52 @@ fun QuizCategories.mapToEntity(): QuizCategoryEntity {
 
 
 
-data class CombineHomeData(
-    var banner: List<HomeBannerModel>,
-    var titleModel: TitleModel,
-    var categoriesModel: List<CategoriesModel>
+data class HomeContentModel(
+    var content: MutableList<HomeItemType>
 )
 
+data class CombineHomeData(
+    var banner: HomeBannerModel,
+    var titleModel: TitleModel,
+    var categoriesModel: CategoriesListModel
+)
+
+//***************** HOME BANNER ****************************
 data class HomeBannerModel(
+    val banner: List<HomeBannerListModel>
+): HomeItemType {
+    override fun getItemType(): ContentItemType {
+        return ContentItemType.BANNER
+    }
+}
+data class HomeBannerListModel(
     val bannerId: Int,
     @DrawableRes
     val bannerImage: Int,
     val category: BannerCategory
 )
+//***************** HOME BANNER ****************************
 
-data class TitleModel(val title: String)
+//***************** TITLE **********************************
+data class TitleModel(val title: String): HomeItemType {
+    override fun getItemType(): ContentItemType {
+        return ContentItemType.TITLE
+    }
+}
+//***************** TITLE **********************************
 
-data class CategoriesModel(
+
+data class CategoriesListModel(
     val id: Int,
     val progress: Int,
     val name: String,
     val resources: QuizCategoryResources
-)
+
+): HomeItemType {
+    override fun getItemType(): ContentItemType {
+        return ContentItemType.CATEGORY
+    }
+}
 
 enum class ContentItemType {
     BANNER,

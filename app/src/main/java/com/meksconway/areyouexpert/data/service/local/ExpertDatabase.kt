@@ -8,8 +8,7 @@ import com.meksconway.areyouexpert.data.service.local.entity.QuizCategoryEntity
 
 @Database(
     entities = [
-        QuizCategoryEntity::class,
-        QuestionEntity::class
+        QuizCategoryEntity::class
     ],
     version = 1,
     exportSchema = false

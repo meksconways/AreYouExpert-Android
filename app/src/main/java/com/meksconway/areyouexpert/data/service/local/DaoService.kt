@@ -20,14 +20,14 @@ interface DaoService {
     @Query("DELETE FROM quiz_category")
     fun deleteQuizList()
 
-    @Query("SELECT * FROM questions_table")
-    fun getQuestions(): Single<List<QuestionEntity>>
+//    @Query("SELECT * FROM questions_table")
+//    fun getQuestions(): Single<List<QuestionEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertQuestion(question: QuestionEntity)
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    fun insertQuestion(question: QuestionEntity)
 
-    @Query("DELETE FROM questions_table")
-    fun deleteQuestions()
+//    @Query("DELETE FROM questions_table")
+//    fun deleteQuestions()
 
 
 

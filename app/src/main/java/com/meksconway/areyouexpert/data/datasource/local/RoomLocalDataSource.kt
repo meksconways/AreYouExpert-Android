@@ -10,7 +10,7 @@ interface RoomLocalDataSource {
     fun insertQuiz(quizCategory: QuizCategoryEntity)
     fun insertQuizList(quizCategory: List<QuizCategoryEntity>)
     fun deleteQuizList()
-    fun getQuestions(): Observable<List<QuestionEntity>>
-    fun insertQuestion(question: QuestionEntity)
-    fun deleteQuestions()
+//    fun getQuestions(): Observable<List<QuestionEntity>>
+//    fun insertQuestion(question: QuestionEntity)
+//    fun deleteQuestions()
 }
