@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class QuizCategoryResponse(
     @SerializedName("trivia_categories")
-    val categories: List<QuizCategories>?
+    val categories: List<QuizCategories>
 )
 
 data class QuizCategories(

@@ -17,9 +17,7 @@ abstract class BaseFragment<I : Input, O : Output, VM : BaseViewModel<I, O>> : D
 
     @Inject
     lateinit var factory: ViewModelFactory
-
-    var viewModel: VM? = null
-    abstract fun createViewModel(): VM
+    abstract val viewModel: VM
     abstract val layRes: Int
 
     override fun onAttach(context: Context) {
@@ -37,10 +35,12 @@ abstract class BaseFragment<I : Input, O : Output, VM : BaseViewModel<I, O>> : D
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = createViewModel()
-        observeViewModel(viewModel?.output)
         viewDidLoad()
+        observeViewModel(viewModel.output)
+
     }
+
+//    abstract fun createViewModel()
 
     abstract fun observeViewModel(output: O?)
     open fun viewDidLoad() {}

@@ -16,7 +16,7 @@ interface IBaseViewModel<I : Input, O : Output> {
 abstract class BaseViewModel<I : Input, O : Output> : ViewModel(),
     IBaseViewModel<I, O> {
 
-    val compositeDisposable = CompositeDisposable()
+    val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
         compositeDisposable.clear()

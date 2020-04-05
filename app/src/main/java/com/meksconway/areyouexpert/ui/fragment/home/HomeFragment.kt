@@ -1,6 +1,8 @@
 package com.meksconway.areyouexpert.ui.fragment.home
 
+import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -10,7 +12,10 @@ import com.meksconway.areyouexpert.domain.usecase.ContentItemType
 import com.meksconway.areyouexpert.domain.usecase.HomeContentModel
 import com.meksconway.areyouexpert.enums.Resource
 import com.meksconway.areyouexpert.ui.adapter.HomeContentAdapter
+import com.meksconway.areyouexpert.util.Res
+import com.meksconway.areyouexpert.util.Status
 import kotlinx.android.synthetic.main.home_fragment.*
+import javax.inject.Inject
 
 class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeViewModel>() {
 
@@ -19,29 +24,37 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
 
     private val adapter = HomeContentAdapter()
 
-    
+
+    override val viewModel: HomeViewModel by viewModels {
+        factory
+    }
 
     override fun observeViewModel(output: HomeViewModelOutput?) {
         output?.homeContentOutput?.observe(viewLifecycleOwner, Observer {
-            checkHomeContentOutput(it)
+            //            checkHomeContentOutput(it)
         })
-        viewModel?.input?.getHomeContent()
+        viewModel._data.observe(viewLifecycleOwner, Observer {
+            checkHomeContentOutput(it)
+            Log.d("***data", it.data.toString())
+        })
+
     }
 
-    private fun checkHomeContentOutput(resource: Resource<HomeContentModel>) {
-        when (resource) {
-            is Resource.Success -> {
+
+    private fun checkHomeContentOutput(resource: Res<HomeContentModel>) {
+        when (resource.status) {
+            Status.SUCCESS -> {
                 // set Adapter
                 setAdapter(resource.data)
                 Toast.makeText(context, "veri geldi", Toast.LENGTH_SHORT).show()
             }
 
-            is Resource.Error -> {
+            Status.ERROR -> {
                 //show errors
-                Toast.makeText(context, resource.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, resource.error?.localizedMessage, Toast.LENGTH_SHORT).show()
             }
 
-            is Resource.Loading -> {
+            Status.LOADING -> {
                 //show progress
                 Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
             }
@@ -51,13 +64,13 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
     private fun setAdapter(listItems: HomeContentModel?) {
 
         listItems?.content?.let { list ->
-            val layoutManager = GridLayoutManager(context,3)
+            val layoutManager = GridLayoutManager(context, 3)
             layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return when (list[position].getItemType()) {
                         ContentItemType.BANNER -> 3
                         ContentItemType.CATEGORY -> 1
-                        ContentItemType.TITLE-> 3
+                        ContentItemType.TITLE -> 3
                     }
                 }
             }
@@ -69,10 +82,6 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
             adapter.setItems(list)
         }
 
-    }
-
-    override fun createViewModel(): HomeViewModel {
-        return ViewModelProvider(this, factory)[HomeViewModel::class.java]
     }
 
 
