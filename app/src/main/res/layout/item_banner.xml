@@ -8,13 +8,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_category_view_home_content"
-        tools:itemCount="10"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        android:orientation="vertical"
-        app:spanCount="3"
-        android:padding="16dp"
-        android:clipChildren="false"
+        android:id="@+id/rvBanner"
+        tools:listitem="@layout/item_banner_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        app:spanCount="2"
+        android:paddingStart="4dp"
+        android:paddingEnd="32dp"
+        android:paddingTop="16dp"
+        android:clipToPadding="false"
         />
 
 

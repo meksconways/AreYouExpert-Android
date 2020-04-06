@@ -18,12 +18,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/gredient_yoda"
             app:layout_constraintDimensionRatio="W,16:9">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imgBannerImage"
+                android:scaleType="centerCrop"
+                android:src="@drawable/welcome_image"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:id="@+id/imgBannerGradient"
+                android:src="@drawable/gradient_flare"
+                android:alpha="0.6"
+                />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/txtBannerTitle"
                 android:fontFamily="@font/opensans_semi_bold"
                 android:textSize="32sp"
                 android:textColor="@android:color/white"

@@ -1,7 +1,6 @@
 package com.meksconway.areyouexpert.domain.usecase
 
 import androidx.annotation.DrawableRes
-import androidx.lifecycle.MutableLiveData
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.common.Decider
 import com.meksconway.areyouexpert.common.QuizCategoryResources
@@ -9,9 +8,12 @@ import com.meksconway.areyouexpert.data.service.local.entity.QuizCategoryEntity
 import com.meksconway.areyouexpert.data.service.remote.model.QuizCategories
 import com.meksconway.areyouexpert.domain.repository.HomeRepository
 import com.meksconway.areyouexpert.enums.BannerCategory
-import com.meksconway.areyouexpert.enums.Resource
+import com.meksconway.areyouexpert.util.Res
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,71 +24,73 @@ class HomeUseCase
     private var compositeDisposable: CompositeDisposable? = null
     private var homeContent = HomeContentModel(content = arrayListOf())
 
-    fun getHomeData(
-        source: MutableLiveData<Resource<HomeContentModel>>,
-        compositeDisposable: CompositeDisposable
-    ) {
-
-        homeContent.content.add(HomeBannerModel(
-            banner = createBanner()
-        ))
-        homeContent.content.add(createTitle())
-
-
+    fun getHomeContent(compositeDisposable: CompositeDisposable): Observable<Res<HomeContentModel>> {
         this.compositeDisposable = compositeDisposable
-        source.value = Resource.Loading()
-        compositeDisposable.add(
-            repository.getRemoteCategories()
+
+        return Observable.create<Res<HomeContentModel>> { emitter ->
+            emitter.onNext(Res.loading())
+            homeContent.content.add(
+                HomeBannerModel(
+                    banner = createBanner()
+                )
+            )
+            homeContent.content.add(createTitle())
+
+            repository.getLocalCategories()
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext {
-                    fetchLocaleCategories(it,source)
-                }
-                .doOnError {
-                    source.value = Resource.Error(it.message ?: "An error occurred")
+                .map {
+                    if (it.isNullOrEmpty()) {
+                        repository.getRemoteCategories()
+                            .subscribe { cat ->
+                                cat.data?.let { quiz ->
+                                    Completable.fromAction {
+                                        repository.insertCategoryList(quiz.mapToEntity())
+                                    }.subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe {
+                                            homeContent.content.addAll(quiz.mapToCategoryModel())
+                                            emitter.onNext(Res.success(homeContent))
+                                        }
+                                } ?: kotlin.run {
+                                    emitter.onNext(Res.error(cat.error ?: Throwable("asd")))
+                                }
+
+                            }
+                    } else {
+                        homeContent.content.addAll(it.mapToCategory())
+                        emitter.onNext(Res.success(homeContent))
+                    }
                 }
                 .subscribe()
-        )
+        }
+
+
     }
+
 
     private fun createTitle(): TitleModel {
         return TitleModel(title = "Categories")
     }
 
-    private fun fetchLocaleCategories(response: List<QuizCategories>,
-                                      source: MutableLiveData<Resource<HomeContentModel>>) {
-        compositeDisposable?.add(
-            repository.getLocalCategories()
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext {
-                    if (it.isNullOrEmpty()) {
-                        repository.insertCategoryList(response.mapToEntity())
-                        homeContent.content.addAll(response.mapToCategoryModel())
-//                        homeContent.categoriesModel = response.mapToCategoryModel()
-                        source.value = Resource.Success(homeContent)
-                    } else {
-                        homeContent.content.addAll(it.mapToCategory())
-//                        homeContent.categoriesModel = it.mapToCategory()
-                        source.value = Resource.Success(homeContent)
-                    }
-                }
-                .doOnError {
-                    repository.insertCategoryList(response.mapToEntity())
-//                    homeContent.categoriesModel = response.mapToCategoryModel()
-                    homeContent.content.addAll(response.mapToCategoryModel())
-                    source.value = Resource.Success(homeContent)
-                }
-                .subscribe()
-        )
-        
-
-    }
 
     private fun createBanner(): List<HomeBannerListModel> {
         val arr = arrayListOf<HomeBannerListModel>()
         arr.add(
             HomeBannerListModel(
                 bannerId = 0,
-                bannerImage = R.drawable.ic_action_fav,
+                bannerImage = R.drawable.welcome_image,
+                bannerGradient = R.drawable.gradient_flare,
+                bannerTitle = "Welcome To App",
+                category = BannerCategory.WELCOME
+
+            )
+        )
+        arr.add(
+            HomeBannerListModel(
+                bannerId = 1,
+                bannerImage = R.drawable.welcome_image,
+                bannerGradient = R.drawable.gredient_yoda,
+                bannerTitle = "Hey Man!",
                 category = BannerCategory.WELCOME
 
             )
@@ -116,38 +120,34 @@ fun QuizCategories.mapToEntity(): QuizCategoryEntity {
 }
 
 
-
 data class HomeContentModel(
     var content: MutableList<HomeItemType>
 )
 
-data class CombineHomeData(
-    var banner: HomeBannerModel,
-    var titleModel: TitleModel,
-    var categoriesModel: CategoriesListModel
-)
 
 //***************** HOME BANNER ****************************
 data class HomeBannerModel(
     val banner: List<HomeBannerListModel>
-): HomeItemType {
-    override fun getItemType(): ContentItemType {
-        return ContentItemType.BANNER
-    }
+) : HomeItemType {
+    override fun getItemType() = ContentItemType.BANNER
+    override fun getContentId() = 710
 }
+
 data class HomeBannerListModel(
     val bannerId: Int,
     @DrawableRes
     val bannerImage: Int,
+    @DrawableRes
+    val bannerGradient: Int,
+    val bannerTitle: String,
     val category: BannerCategory
 )
 //***************** HOME BANNER ****************************
 
 //***************** TITLE **********************************
-data class TitleModel(val title: String): HomeItemType {
-    override fun getItemType(): ContentItemType {
-        return ContentItemType.TITLE
-    }
+data class TitleModel(val title: String) : HomeItemType {
+    override fun getItemType() = ContentItemType.TITLE
+    override fun getContentId() = title.length.hashCode()
 }
 //***************** TITLE **********************************
 
@@ -158,10 +158,9 @@ data class CategoriesListModel(
     val name: String,
     val resources: QuizCategoryResources
 
-): HomeItemType {
-    override fun getItemType(): ContentItemType {
-        return ContentItemType.CATEGORY
-    }
+) : HomeItemType {
+    override fun getItemType() = ContentItemType.CATEGORY
+    override fun getContentId() = id
 }
 
 enum class ContentItemType {
@@ -172,4 +171,5 @@ enum class ContentItemType {
 
 interface HomeItemType {
     fun getItemType(): ContentItemType
+    fun getContentId(): Int
 }
