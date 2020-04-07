@@ -1,9 +1,11 @@
 package com.meksconway.areyouexpert.ui.fragment.home
 
 import android.util.Log
+import androidx.annotation.NavigationRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.meksconway.areyouexpert.data.service.local.entity.NotificationEntity
 import com.meksconway.areyouexpert.domain.usecase.HomeContentModel
 import com.meksconway.areyouexpert.domain.usecase.HomeUseCase
 import com.meksconway.areyouexpert.enums.BannerCategory
@@ -14,6 +16,8 @@ import com.meksconway.areyouexpert.viewmodel.Input
 import com.meksconway.areyouexpert.viewmodel.Output
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 interface HomeViewModelInput : Input {
@@ -39,27 +43,26 @@ class HomeViewModel
 
     override val input: HomeViewModelInput = this
     override val output: HomeViewModelOutput = this
+
     init {
-        getContent(compositeDisposable)
+        getContent()
     }
 
     val _data = MutableLiveData<Res<HomeContentModel>>()
 
-    private fun getContent(compositeDisposable: CompositeDisposable) {
-        compositeDisposable.add(
-            useCase.getHomeContent(compositeDisposable)
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext {
-                    _data.value = it
-                }
-                .subscribe()
-        )
+    private fun getContent() {
+        useCase.getHomeContent()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext {
+                _data.value = it
+            }
+            .subscribe()
+            .addTo(compositeDisposable)
 
     }
 
     //inputs
     override fun getHomeContent() {
-
 
     }
 

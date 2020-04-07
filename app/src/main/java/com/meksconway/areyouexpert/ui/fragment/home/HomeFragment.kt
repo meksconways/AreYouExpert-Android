@@ -27,6 +27,10 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
     val pool = RecyclerView.RecycledViewPool()
 
 
+    override fun viewDidLoad() {
+        super.viewDidLoad()
+    }
+
     override val viewModel: HomeViewModel by viewModels {
         factory
     }

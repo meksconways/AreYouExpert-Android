@@ -12,7 +12,6 @@ import com.meksconway.areyouexpert.util.Res
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -21,12 +20,9 @@ import javax.inject.Singleton
 class HomeUseCase
 @Inject constructor(private val repository: HomeRepository) {
 
-    private var compositeDisposable: CompositeDisposable? = null
     private var homeContent = HomeContentModel(content = arrayListOf())
 
-    fun getHomeContent(compositeDisposable: CompositeDisposable): Observable<Res<HomeContentModel>> {
-        this.compositeDisposable = compositeDisposable
-
+    fun getHomeContent(): Observable<Res<HomeContentModel>> {
         return Observable.create<Res<HomeContentModel>> { emitter ->
             emitter.onNext(Res.loading())
             homeContent.content.add(
@@ -63,7 +59,6 @@ class HomeUseCase
                 }
                 .subscribe()
         }
-
 
     }
 
