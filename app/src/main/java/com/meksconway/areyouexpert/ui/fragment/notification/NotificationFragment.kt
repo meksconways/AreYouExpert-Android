@@ -1,33 +1,27 @@
 package com.meksconway.areyouexpert.ui.fragment.notification
 
-import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
+import android.util.Log
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.meksconway.areyouexpert.R
+import com.meksconway.areyouexpert.base.BaseFragment
 
-class NotificationFragment : Fragment() {
+class NotificationFragment :
+    BaseFragment<NotificationViewModelInput, NotificationViewModelOutput, NotificationViewModel>() {
+    override val viewModel: NotificationViewModel by viewModels {
+        factory
+    }
+    override val layRes: Int
+        get() = R.layout.notification_fragment
 
-    companion object {
-        fun newInstance() = NotificationFragment()
+    override fun observeViewModel(output: NotificationViewModelOutput?) {
+        output?.notificationData?.observe(viewLifecycleOwner, Observer{
+            Log.d("***data",it.status.toString())
+        })
     }
 
-    private lateinit var viewModel: NotificationViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.notification_fragment, container, false)
+    override fun viewDidLoad() {
+        super.viewDidLoad()
+        viewModel.input.getNotifications()
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(NotificationViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

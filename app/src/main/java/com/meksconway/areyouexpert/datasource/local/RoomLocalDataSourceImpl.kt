@@ -37,7 +37,7 @@ class RoomLocalDataSourceImpl
         daoService.insertNotificationList(notification)
     }
 
-    override fun deleteNotification() {
+    override fun deleteAllNotification() {
         daoService.deleteNotificationList()
     }
 
