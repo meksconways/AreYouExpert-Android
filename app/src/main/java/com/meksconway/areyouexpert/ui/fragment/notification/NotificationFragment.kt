@@ -31,7 +31,7 @@ class NotificationFragment :
 
     override fun observeViewModel(output: NotificationViewModelOutput?) {
         output?.notificationData?.observe(viewLifecycleOwner, Observer {
-            chechNotificationContentOutput(it)
+            checkNotificationContentOutput(it)
             Log.d("***data", it.status.toString())
         })
     }
@@ -41,7 +41,7 @@ class NotificationFragment :
         viewModel.input.getNotifications()
     }
 
-    private fun chechNotificationContentOutput(resource: Res<List<NotificationEntity>>) {
+    private fun checkNotificationContentOutput(resource: Res<List<NotificationEntity>>) {
         when (resource.status) {
             Status.SUCCESS -> {
                 //set Adapter
