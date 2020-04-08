@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:id="@+id/txt_tittle"
+            android:id="@+id/txt_tittle_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tittle 1"
@@ -22,12 +22,12 @@
             android:layout_marginLeft="16dp"/>
 
         <TextView
-            android:id="@+id/txt_message"
+            android:id="@+id/txt_message_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Message"
             android:textSize="16sp"
-            android:layout_below="@+id/txt_tittle"
+            android:layout_below="@+id/txt_tittle_notification"
             android:layout_margin="4dp"
             android:layout_marginLeft="32dp"/>
     </RelativeLayout>
