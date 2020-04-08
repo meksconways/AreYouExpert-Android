@@ -6,14 +6,17 @@ import io.reactivex.ObservableTransformer
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
 
-class Util {
-
-}
-
 //Transformers
 fun <T> Observable<T>.remote(): Observable<Res<T>> =
     map { Res.success(it) }
         .networkErrorHandler()
+        .subscribeOn(Schedulers.io())
+        .compose(concatWithLoading())
+
+
+fun <T> Observable<T>.local(): Observable<Res<T>> =
+    map { Res.success(it) }
+        .localErrorHandler()
         .subscribeOn(Schedulers.io())
         .compose(concatWithLoading())
 
@@ -23,6 +26,21 @@ fun <T> concatWithLoading(): ObservableTransformer<Res<T>,
 }
 
 fun <T> Observable<Res<T>>.networkErrorHandler(): Observable<Res<T>> {
+    val transformer: ObservableTransformer<Res<T>, Res<T>> =
+        ObservableTransformer { upstream ->
+            upstream.onErrorReturn {
+                //                val handleInfo = when(throwable) {
+//                    is HttpException -> RetrofitErrorHandlerFactory.getHttpErrorHandler()
+//                    else -> throwable
+//
+//                }
+                Res.error(it)
+            }
+        }
+    return compose(transformer)
+}
+
+fun <T> Observable<Res<T>>.localErrorHandler(): Observable<Res<T>> {
     val transformer: ObservableTransformer<Res<T>, Res<T>> =
         ObservableTransformer { upstream ->
             upstream.onErrorReturn {

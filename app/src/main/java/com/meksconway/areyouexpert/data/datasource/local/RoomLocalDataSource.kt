@@ -14,7 +14,7 @@ interface RoomLocalDataSource {
     fun getNotificationList(): Observable<List<NotificationEntity>>
     fun insertNotification(notification: NotificationEntity)
     fun insertNotificationList(notification : List<NotificationEntity>)
-    fun deleteNotification()
+    fun deleteAllNotification()
 //    fun getQuestions(): Observable<List<QuestionEntity>>
 //    fun insertQuestion(question: QuestionEntity)
 //    fun deleteQuestions()

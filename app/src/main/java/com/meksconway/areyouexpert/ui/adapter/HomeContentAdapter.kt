@@ -1,7 +1,5 @@
 package com.meksconway.areyouexpert.ui.adapter
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +11,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.domain.usecase.*
-import java.lang.IllegalStateException
 
 class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
