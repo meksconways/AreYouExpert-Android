@@ -1,6 +1,9 @@
 package com.meksconway.areyouexpert.base
 
 import android.os.Bundle
+import com.meksconway.areyouexpert.viewmodel.BaseViewModel
+import com.meksconway.areyouexpert.viewmodel.Input
+import com.meksconway.areyouexpert.viewmodel.Output
 import dagger.android.support.DaggerAppCompatActivity
 
 abstract class BaseActivity<I : Input, O : Output, VM : BaseViewModel<I, O>> :
@@ -17,6 +20,7 @@ abstract class BaseActivity<I : Input, O : Output, VM : BaseViewModel<I, O>> :
     }
 
     abstract fun observeViewModel(output: O)
+
 
 
     fun showWarningDialog() {
