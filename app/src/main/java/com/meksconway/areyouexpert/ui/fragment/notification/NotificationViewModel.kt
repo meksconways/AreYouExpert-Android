@@ -29,28 +29,35 @@ data class NotificationNavigation(
 
 interface NotificationViewModelOutput : Output {
 
-    var notificationData: MutableLiveData<Res<List<NotificationEntity>>>
-    var deleteOutput: SingleLiveEvent<Boolean>
-    var clickOutput: SingleLiveEvent<NotificationNavigation>
+    val notificationData: MutableLiveData<Res<List<NotificationEntity>>>
+    val deleteOutput: SingleLiveEvent<Boolean>
+    val clickOutput: SingleLiveEvent<NotificationNavigation>
 }
 
 class NotificationViewModel
 @Inject constructor(private val useCase: NotificationUseCase) :
     BaseViewModel<NotificationViewModelInput, NotificationViewModelOutput>(),
     NotificationViewModelInput, NotificationViewModelOutput {
+
+
     override val input: NotificationViewModelInput = this
     override val output: NotificationViewModelOutput = this
 
+    init {
+        getNotifications()
+    }
+
+    //inputs
     override fun getNotifications() {
         useCase.getLocalNotificationList().observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {notificationData.value = it}
+            .doOnNext { notificationData.value = it }
             .subscribe()
             .addTo(compositeDisposable)
     }
 
     override fun deleteAllNotifications() {
         useCase.deleteAllNotificationList().observeOn(AndroidSchedulers.mainThread())
-            .subscribe{deleteOutput.value = true}
+            .subscribe { deleteOutput.value = true }
             .addTo(compositeDisposable)
     }
 
@@ -58,6 +65,7 @@ class NotificationViewModel
         clickOutput.value = navigation
     }
 
+    //outputs
     override var notificationData = MutableLiveData<Res<List<NotificationEntity>>>()
 
     override var deleteOutput = SingleLiveEvent<Boolean>()

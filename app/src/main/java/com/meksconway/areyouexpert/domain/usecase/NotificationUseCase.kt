@@ -21,8 +21,8 @@ class NotificationUseCase
 
     fun deleteAllNotificationList(): Completable {
         return Completable.fromAction {
-                repository.deleteLocalNotificationList()
-            }.subscribeOn(Schedulers.io())
+            repository.deleteLocalNotificationList()
+        }.subscribeOn(Schedulers.io())
     }
 
 }

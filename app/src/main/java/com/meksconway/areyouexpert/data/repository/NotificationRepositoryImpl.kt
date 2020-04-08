@@ -23,6 +23,6 @@ class NotificationRepositoryImpl
         roomLocalDataSource.insertNotificationList(notification)
 
     override fun deleteLocalNotificationList() {
-
+        roomLocalDataSource.deleteAllNotification()
     }
 }
