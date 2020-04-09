@@ -2,6 +2,7 @@ package com.meksconway.areyouexpert.ui.fragment.notification
 
 import android.util.Log
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
 import com.meksconway.areyouexpert.data.service.local.entity.NotificationEntity
 import com.meksconway.areyouexpert.ui.adapter.NotificationAdapter
+import com.meksconway.areyouexpert.ui.fragment.home.HomeViewModel
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status
 import kotlinx.android.synthetic.main.notification_fragment.*
@@ -22,6 +24,10 @@ class NotificationFragment :
     override val layRes: Int
         get() = R.layout.notification_fragment
 
+    val aViewModel: HomeViewModel by viewModels {
+        factory
+    }
+
     private val adapter = NotificationAdapter()
     private val layoutManager = LinearLayoutManager(context)
 
@@ -34,6 +40,7 @@ class NotificationFragment :
 
     override fun viewDidLoad() {
         super.viewDidLoad()
+        aViewModel.input.getHomeContent()
 
     }
 

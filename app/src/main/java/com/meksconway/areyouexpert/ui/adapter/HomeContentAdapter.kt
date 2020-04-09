@@ -79,12 +79,13 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setItems(listItems: List<HomeItemType>?) {
+        contentData.clear()
         if (listItems != null) {
-            val diffCallback = HomeContentAdapterDiffUtil(contentData, listItems)
-            val diffResult = DiffUtil.calculateDiff(diffCallback)
-            contentData.clear()
+//            val diffCallback = HomeContentAdapterDiffUtil(contentData, listItems)
+//            val diffResult = DiffUtil.calculateDiff(diffCallback)
             contentData.addAll(listItems)
-            diffResult.dispatchUpdatesTo(this)
+            notifyDataSetChanged()
+//            diffResult.dispatchUpdatesTo(this)
         }
     }
 

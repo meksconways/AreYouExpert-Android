@@ -5,19 +5,24 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/appToolbarBackground</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/appToolbarBackground</item>
         <item name="android:windowBackground">@color/appBackground</item>
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="fontFamily">@font/opensans_semi_bold</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
         <item name="android:navigationBarColor">@color/appToolbarBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@android:color/white</item>
+    </style>
+
+    <style name="HomeToolbarTheme" parent="Widget.MaterialComponents.Toolbar">
+        <item name="actionMenuTextColor">@color/white</item>
     </style>
 
     <style name="SplashTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/appBackground</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>
     </style>

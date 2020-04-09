@@ -8,44 +8,29 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {
 
-    private val pending = AtomicBoolean(false)
-    private val observers = mutableSetOf<Observer<in T>>()
-
-    val internalObserver = Observer<T> { t ->
-        if (pending.compareAndSet(true, false)) {
-            observers.forEach { observer ->
-                observer.onChanged(t)
-            }
-        }
-    }
+    private val mPending = AtomicBoolean(false)
 
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
-        observers.add(observer)
-
-        if (!hasObservers()) {
-            super.observe(owner, internalObserver)
-        }
-    }
-
-    override fun removeObservers(owner: LifecycleOwner) {
-        observers.clear()
-        super.removeObservers(owner)
-    }
-
-    override fun removeObserver(observer: Observer<in T>) {
-        observers.remove(observer)
-        super.removeObserver(observer)
+        super.observe(owner, Observer {
+            if (mPending.compareAndSet(true, false)) {
+                observer.onChanged(it)
+            }
+        })
     }
 
     @MainThread
-    override fun setValue(value: T?) {
-        pending.set(true)
-        super.setValue(value)
+    override fun setValue(t: T?) {
+        mPending.set(true)
+        super.setValue(t)
     }
 
     @MainThread
     fun call() {
         value = null
+    }
+
+    companion object {
+        private val TAG = "SingleLiveEvent"
     }
 }
