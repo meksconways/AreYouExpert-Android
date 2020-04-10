@@ -11,6 +11,7 @@ import com.meksconway.areyouexpert.extension.viewextension.gone
 import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.adapter.HomeContentAdapter
 import com.meksconway.areyouexpert.ui.fragment.notification.NotificationFragment
+import com.meksconway.areyouexpert.ui.fragment.settings.SettingsFragment
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -50,7 +51,7 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
                     return@setOnMenuItemClickListener true
                 }
                 R.id.settings -> {
-//                    multipleStackNavigator?.start(NotificationFragment())
+                    navigator?.start(SettingsFragment())
                     return@setOnMenuItemClickListener true
                 }
                 else -> return@setOnMenuItemClickListener false
