@@ -3,6 +3,7 @@ package com.meksconway.areyouexpert.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.meksconway.areyouexpert.di.ViewModelKey
+import com.meksconway.areyouexpert.ui.activity.main.MainAcitivityViewModel
 import com.meksconway.areyouexpert.ui.adapter.SettingsAdapter
 import com.meksconway.areyouexpert.ui.fragment.home.HomeViewModel
 import com.meksconway.areyouexpert.ui.fragment.notification.NotificationViewModel
@@ -28,6 +29,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SettingsViewModel::class)
     abstract fun bindSettingsViewModel(vm: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MainAcitivityViewModel::class)
+    abstract fun bindMainViewModel(vm: MainAcitivityViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

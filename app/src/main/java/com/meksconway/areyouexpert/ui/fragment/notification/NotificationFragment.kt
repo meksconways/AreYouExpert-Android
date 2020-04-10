@@ -13,6 +13,7 @@ import com.meksconway.areyouexpert.ui.adapter.NotificationAdapter
 import com.meksconway.areyouexpert.ui.fragment.home.HomeViewModel
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status
+import com.meksconway.areyouexpert.util.ToolbarConfigration
 import kotlinx.android.synthetic.main.notification_fragment.*
 
 class NotificationFragment :
@@ -24,8 +25,9 @@ class NotificationFragment :
     override val layRes: Int
         get() = R.layout.notification_fragment
 
-    val aViewModel: HomeViewModel by viewModels {
-        factory
+
+    override fun setToolbarConfig(): ToolbarConfigration {
+        return ToolbarConfigration("Notifications", true, canBack = true)
     }
 
     private val adapter = NotificationAdapter()
@@ -40,8 +42,6 @@ class NotificationFragment :
 
     override fun viewDidLoad() {
         super.viewDidLoad()
-        aViewModel.input.getHomeContent()
-
     }
 
     private fun checkNotificationContentOutput(resource: Res<List<NotificationEntity>>) {

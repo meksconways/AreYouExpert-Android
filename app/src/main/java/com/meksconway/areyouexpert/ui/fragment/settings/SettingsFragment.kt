@@ -9,6 +9,7 @@ import com.meksconway.areyouexpert.base.BaseFragment
 import com.meksconway.areyouexpert.domain.usecase.SettingsModel
 import com.meksconway.areyouexpert.ui.adapter.SettingsAdapter
 import com.meksconway.areyouexpert.util.Res
+import com.meksconway.areyouexpert.util.ToolbarConfigration
 import kotlinx.android.synthetic.main.settings_fragment.*
 
 class SettingsFragment :
@@ -22,6 +23,10 @@ class SettingsFragment :
 
     override val viewModel: SettingsViewModel by viewModels {
         factory
+    }
+
+    override fun setToolbarConfig(): ToolbarConfigration {
+        return ToolbarConfigration("Settings", visible = true, canBack = canBack)
     }
 
     override fun viewDidLoad() {

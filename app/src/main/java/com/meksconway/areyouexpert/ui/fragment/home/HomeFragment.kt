@@ -1,5 +1,8 @@
 package com.meksconway.areyouexpert.ui.fragment.home
 
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -7,6 +10,7 @@ import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
 import com.meksconway.areyouexpert.domain.usecase.ContentItemType
 import com.meksconway.areyouexpert.domain.usecase.HomeContentModel
+import com.meksconway.areyouexpert.domain.usecase.HomeItemType
 import com.meksconway.areyouexpert.extension.viewextension.gone
 import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.adapter.HomeContentAdapter
@@ -14,6 +18,7 @@ import com.meksconway.areyouexpert.ui.fragment.notification.NotificationFragment
 import com.meksconway.areyouexpert.ui.fragment.settings.SettingsFragment
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status
+import com.meksconway.areyouexpert.util.ToolbarConfigration
 import kotlinx.android.synthetic.main.home_fragment.*
 
 class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeViewModel>() {
@@ -21,7 +26,9 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
     override val layRes: Int
         get() = R.layout.home_fragment
 
-    private val adapter = HomeContentAdapter()
+    private val adapter: HomeContentAdapter by lazy {
+        HomeContentAdapter()
+    }
 
     override val viewModel: HomeViewModel by viewModels {
         factory
@@ -33,30 +40,14 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
         })
     }
 
+    private val list = arrayListOf<HomeItemType>()
+
     override fun viewDidLoad() {
         super.viewDidLoad()
-        setHasOptionsMenu(true);
-        rvHome?.setItemViewCacheSize(20)
+        rvHome?.setItemViewCacheSize(30)
         rvHome?.setHasFixedSize(true)
+        rvHome?.layoutManager = GridLayoutManager(context, 2)
         rvHome?.adapter = adapter
-        toolbar.inflateMenu(R.menu.menu_home_fragment)
-        toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.notification -> {
-                    navigator?.start(NotificationFragment())
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.profile -> {
-//                    multipleStackNavigator?.start(NotificationFragment())
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.settings -> {
-                    navigator?.start(SettingsFragment())
-                    return@setOnMenuItemClickListener true
-                }
-                else -> return@setOnMenuItemClickListener false
-            }
-        }
     }
 
 
@@ -90,9 +81,30 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
         rvHome.gone()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        return inflater.inflate(R.menu.menu_home_fragment, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.settings -> {
+                navigator?.start(SettingsFragment().apply { canBack = true })
+                true
+            }
+            R.id.profile -> {
+                false
+            }
+            R.id.notification -> {
+                navigator?.start(NotificationFragment().apply { canBack = true })
+                true
+            }
+            else -> false
+        }
+    }
+
     private fun setAdapter(listItems: HomeContentModel?) {
         listItems?.content?.let { list ->
-            rvHome?.layoutManager = GridLayoutManager(context, 2).apply {
+            (rvHome.layoutManager as? GridLayoutManager)?.apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (list[position].getItemType()) {
@@ -106,6 +118,10 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
             adapter.setItems(list)
         }
 
+    }
+
+    override fun setToolbarConfig(): ToolbarConfigration {
+        return ToolbarConfigration("Are You Expert", true, canBack = false)
     }
 
 
