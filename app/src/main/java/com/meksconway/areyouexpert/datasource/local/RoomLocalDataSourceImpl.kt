@@ -2,6 +2,7 @@ package com.meksconway.areyouexpert.datasource.local
 
 import com.meksconway.areyouexpert.data.datasource.local.RoomLocalDataSource
 import com.meksconway.areyouexpert.data.service.local.DaoService
+import com.meksconway.areyouexpert.data.service.local.entity.NotificationEntity
 import com.meksconway.areyouexpert.data.service.local.entity.QuestionEntity
 import com.meksconway.areyouexpert.data.service.local.entity.QuizCategoryEntity
 import io.reactivex.Observable
@@ -13,7 +14,11 @@ class RoomLocalDataSourceImpl
     override fun getQuizList(): Observable<List<QuizCategoryEntity>> = daoService
         .getQuizList().toObservable()
 
-    override fun insertQuizList(quizCategory: QuizCategoryEntity) {
+    override fun insertQuiz(quizCategory: QuizCategoryEntity) {
+        daoService.insertQuiz(quizCategory)
+    }
+
+    override fun insertQuizList(quizCategory: List<QuizCategoryEntity>) {
         daoService.insertQuizList(quizCategory)
     }
 
@@ -21,17 +26,32 @@ class RoomLocalDataSourceImpl
         daoService.deleteQuizList()
     }
 
-    override fun getQuestions(): Observable<List<QuestionEntity>> = daoService
-        .getQuestions().toObservable()
+    override fun getNotificationList(): Observable<List<NotificationEntity>> = daoService
+        .getNotificationList().toObservable()
 
-
-    override fun insertQuestion(question: QuestionEntity) {
-        daoService.insertQuestion(question)
+    override fun insertNotification(notification: NotificationEntity) {
+        daoService.insertNotification(notification)
     }
 
-    override fun deleteQuestions() {
-        daoService.deleteQuestions()
+    override fun insertNotificationList(notification: List<NotificationEntity>) {
+        daoService.insertNotificationList(notification)
     }
+
+    override fun deleteAllNotification() {
+        daoService.deleteNotificationList()
+    }
+
+//    override fun getQuestions(): Observable<List<QuestionEntity>> = daoService
+//        .getQuestions().toObservable()
+//
+//
+//    override fun insertQuestion(question: QuestionEntity) {
+//        daoService.insertQuestion(question)
+//    }
+//
+//    override fun deleteQuestions() {
+//        daoService.deleteQuestions()
+//    }
 
 
 }

@@ -8,6 +8,8 @@
 
     <color name="appBackground">#484848</color>
     <color name="appToolbarBackground">#505050</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000</color>
 
     <color name="catGeneralPrimaryColor">#ff1744</color>
     <color name="catGeneralLightColor">#ff616f</color>
@@ -76,6 +78,10 @@
     <color name="catArtPrimaryColor">#e91e63</color>
     <color name="catArtLightColor">#ff6090</color>
     <color name="catArtDarkColor">#b0003a</color>
+    
+    <color name="catCelebritiesPrimaryColor">#ff5722</color>
+    <color name="catCelebritiesLightColor">#ff8a50</color>
+    <color name="catCelebritiesDarkColor">#c41c00</color>
 
     <color name="catAnimalsPrimaryColor">#00c853</color>
     <color name="catAnimalsLightColor">#5efc82</color>
