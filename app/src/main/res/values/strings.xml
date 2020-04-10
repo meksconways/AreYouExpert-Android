@@ -13,4 +13,7 @@ Click the Text tab to show the XML view of your navigation graph. The XML contai
     </string>
     <string name="connection_error">Connection Error</string>
     <string name="please_check_your_internet_connection">Please check your internet connection</string>
+    <string name="profile">Profile</string>
+    <string name="notifications">Notifications</string>
+    <string name="settings">Settings</string>
 </resources>

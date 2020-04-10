@@ -33,7 +33,6 @@ class HomeUseCase
             homeContent.content.add(createTitle())
 
             repository.getLocalCategories()
-                .observeOn(AndroidSchedulers.mainThread())
                 .map {
                     if (it.isNullOrEmpty()) {
                         repository.getRemoteCategories()
@@ -42,7 +41,6 @@ class HomeUseCase
                                     Completable.fromAction {
                                         repository.insertCategoryList(quiz.mapToEntity())
                                     }.subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe {
                                             homeContent.content.addAll(quiz.mapToCategoryModel())
                                             emitter.onNext(Res.success(homeContent))
