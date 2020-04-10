@@ -8,6 +8,7 @@ import com.meksconway.areyouexpert.viewmodel.BaseViewModel
 import com.meksconway.areyouexpert.viewmodel.Input
 import com.meksconway.areyouexpert.viewmodel.Output
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.toObservable
 import javax.inject.Inject
 
@@ -18,32 +19,30 @@ interface SettingsViewModelInput : Input {
 }
 
 interface SettingsViewModelOutput : Output {
-    val settingsOutput: MutableLiveData<List<SettingsListModel>>
+    val settingsOutput: MutableLiveData<Res<SettingsListModel>>
 }
 
 class SettingsViewModel
-@Inject constructor(private val useCase: SettingsUseCase):
-BaseViewModel<SettingsViewModelInput,SettingsViewModelOutput>(),SettingsViewModelInput,
-SettingsViewModelOutput{
+@Inject constructor(private val useCase: SettingsUseCase) :
+    BaseViewModel<SettingsViewModelInput, SettingsViewModelOutput>(), SettingsViewModelInput,
+    SettingsViewModelOutput {
     override val input: SettingsViewModelInput = this
-    override val output: SettingsViewModelOutput= this
+    override val output: SettingsViewModelOutput = this
 
     init {
-        getSettingsContent()
+        getSettings()
     }
 
+    val _data = MutableLiveData<Res<SettingsViewModel>>()
+
     override fun getSettings() {
-        TODO("Not yet implemented")
+        useCase.getSettingsList()
     }
 
     override fun clickSettings() {
-        TODO("Not yet implemented")
 
-    }
-    private fun getSettingsContent(){
-        useCase.getSettingsList()
 
     }
 
-    override val settingsOutput = MutableLiveData<List<SettingsListModel>>()
+    override val settingsOutput = MutableLiveData<Res<SettingsListModel>>()
 }

@@ -1,6 +1,7 @@
 package com.meksconway.areyouexpert.domain.usecase
 
 import com.meksconway.areyouexpert.domain.repository.SettingsRepository
+import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -8,7 +9,7 @@ import javax.inject.Singleton
 class SettingsUseCase
 @Inject constructor(private val repository: SettingsRepository) {
 
-    fun getSettingsList(): List<SettingsListModel> {
+    fun getSettingsList(): ArrayList<SettingsListModel> {
         val arr = arrayListOf<SettingsListModel>()
         arr.add(
             SettingsListModel(

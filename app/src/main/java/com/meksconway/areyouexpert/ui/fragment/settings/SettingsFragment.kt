@@ -1,33 +1,62 @@
 package com.meksconway.areyouexpert.ui.fragment.settings
 
-import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.meksconway.areyouexpert.R
+import com.meksconway.areyouexpert.base.BaseFragment
+import com.meksconway.areyouexpert.ui.adapter.SettingsAdapter
+import com.meksconway.areyouexpert.util.Res
+import com.meksconway.areyouexpert.util.Status
+import kotlinx.android.synthetic.main.settings_fragment.*
 
-class SettingsFragment : Fragment() {
+abstract class SettingsFragment : BaseFragment<SettingsViewModelInput, SettingsViewModelOutput
+        , SettingsViewModel>() {
 
-    companion object {
-        fun newInstance() = SettingsFragment()
+    override val layRes: Int
+        get() = R.layout.settings_fragment
+
+    private val adapter = SettingsAdapter()
+    private val layoutManager = LinearLayoutManager(context)
+
+    override val viewModel: SettingsViewModel by viewModels {
+        factory
     }
 
-    private lateinit var viewModel: SettingsViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.settings_fragment, container, false)
+    override fun viewDidLoad() {
+        super.viewDidLoad()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun observeViewModel(output: SettingsViewModelOutput?) {
+        output?.settingsOutput?.observe(viewLifecycleOwner, Observer {
+        })
+        viewModel._data.observe(viewLifecycleOwner, Observer {
+            checkSettingsContentOutput(it)
+        })
     }
 
+    private fun checkSettingsContentOutput(resource: Res<SettingsViewModel>) {
+        when (resource.status) {
+            Status.SUCCESS -> {
+                setAdapter(resource.data)
+                Toast.makeText(context,"veri geldi", Toast.LENGTH_SHORT).show()
+            }
+            Status.ERROR -> {
+                Toast.makeText(context,resource.error?.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+            Status.LOADING -> {
+                Toast.makeText(context,"loading",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    }
+    private fun setAdapter(model: SettingsViewModel?){
+        adapter.setHasStableIds(true)
+        model?.let {
+            rvSettings?.adapter = adapter
+            rvSettings?.layoutManager = layoutManager
+        }
+    }
 }
