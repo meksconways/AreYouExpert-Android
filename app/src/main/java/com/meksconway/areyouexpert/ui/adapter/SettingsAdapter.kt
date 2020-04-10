@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.meksconway.areyouexpert.R
-import com.meksconway.areyouexpert.domain.usecase.SettingsListModel
+import com.meksconway.areyouexpert.domain.usecase.SettingsModel
 
 
 class SettingsAdapter : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>() {
 
-    private val settingsData = arrayListOf<SettingsListModel>()
+    private val settingsData = arrayListOf<SettingsModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingsViewHolder {
         val view: View = LayoutInflater.from(parent.context)
@@ -24,16 +24,19 @@ class SettingsAdapter : RecyclerView.Adapter<SettingsAdapter.SettingsViewHolder>
     override fun onBindViewHolder(holder: SettingsViewHolder, position: Int) {
         holder.bind(settingsData[position])
     }
-    fun setItems(list: SettingsListModel){
+
+    fun setItems(list: List<SettingsModel>) {
         settingsData.clear()
-        settingsData.add(list)
+        settingsData.addAll(list)
         notifyDataSetChanged()
     }
+
     //recyclerView içerisindeki itemi tutuyor...
     class SettingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        lateinit var model: SettingsListModel
+        lateinit var model: SettingsModel
         private val settingsTitle = itemView.findViewById<TextView>(R.id.txtSettingsTitle)
-        fun bind(model: SettingsListModel) {
+
+        fun bind(model: SettingsModel) {
             this.model = model
             settingsTitle?.text = model.settingsTitle
         }

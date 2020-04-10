@@ -1,19 +1,17 @@
 package com.meksconway.areyouexpert.ui.fragment.settings
 
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
+import com.meksconway.areyouexpert.domain.usecase.SettingsModel
 import com.meksconway.areyouexpert.ui.adapter.SettingsAdapter
 import com.meksconway.areyouexpert.util.Res
-import com.meksconway.areyouexpert.util.Status
 import kotlinx.android.synthetic.main.settings_fragment.*
 
-abstract class SettingsFragment : BaseFragment<SettingsViewModelInput, SettingsViewModelOutput
-        , SettingsViewModel>() {
+abstract class SettingsFragment :
+    BaseFragment<SettingsViewModelInput, SettingsViewModelOutput, SettingsViewModel>() {
 
     override val layRes: Int
         get() = R.layout.settings_fragment
@@ -31,32 +29,23 @@ abstract class SettingsFragment : BaseFragment<SettingsViewModelInput, SettingsV
 
     override fun observeViewModel(output: SettingsViewModelOutput?) {
         output?.settingsOutput?.observe(viewLifecycleOwner, Observer {
-        })
-        viewModel._data.observe(viewLifecycleOwner, Observer {
             checkSettingsContentOutput(it)
         })
     }
 
-    private fun checkSettingsContentOutput(resource: Res<SettingsViewModel>) {
-        when (resource.status) {
-            Status.SUCCESS -> {
-                setAdapter(resource.data)
-                Toast.makeText(context,"veri geldi", Toast.LENGTH_SHORT).show()
-            }
-            Status.ERROR -> {
-                Toast.makeText(context,resource.error?.localizedMessage, Toast.LENGTH_SHORT).show()
-            }
-            Status.LOADING -> {
-                Toast.makeText(context,"loading",Toast.LENGTH_SHORT).show()
-            }
+    private fun checkSettingsContentOutput(resource: Res<List<SettingsModel>>) {
+        if (resource.data != null) {
+            setAdapter(resource.data)
         }
-
     }
-    private fun setAdapter(model: SettingsViewModel?){
+
+    private fun setAdapter(list: List<SettingsModel>?) {
         adapter.setHasStableIds(true)
-        model?.let {
+        list?.let {
             rvSettings?.adapter = adapter
             rvSettings?.layoutManager = layoutManager
+            adapter.setItems(it)
         }
+
     }
 }
