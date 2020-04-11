@@ -1,5 +1,6 @@
 package com.meksconway.areyouexpert.di.module
 
+import com.meksconway.areyouexpert.ui.fragment.categoryonbard.CategoryOnBoardFragment
 import com.meksconway.areyouexpert.ui.fragment.home.HomeFragment
 import com.meksconway.areyouexpert.ui.fragment.notification.NotificationFragment
 import com.meksconway.areyouexpert.ui.fragment.settings.SettingsFragment
@@ -17,5 +18,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSettingsFragment(): SettingsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeCategoryOnBoardFragment(): CategoryOnBoardFragment
 
 }

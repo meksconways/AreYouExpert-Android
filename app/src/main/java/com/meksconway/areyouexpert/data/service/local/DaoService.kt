@@ -1,6 +1,7 @@
 package com.meksconway.areyouexpert.data.service.local
 
 import androidx.room.*
+import com.meksconway.areyouexpert.data.service.local.entity.CategoryProgressEntity
 import com.meksconway.areyouexpert.data.service.local.entity.NotificationEntity
 import com.meksconway.areyouexpert.data.service.local.entity.QuestionEntity
 import com.meksconway.areyouexpert.data.service.local.entity.QuizCategoryEntity
@@ -33,14 +34,12 @@ interface DaoService {
     @Query("DELETE FROM notification_table")
     fun deleteNotificationList()
 
-//    @Query("SELECT * FROM questions_table")
-//    fun getQuestions(): Single<List<QuestionEntity>>
+    @Query("Select * from categoryprogress_entity")
+    fun getCategoryProgressEntity(): Single<List<CategoryProgressEntity>>
 
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    fun insertQuestion(question: QuestionEntity)
-
-//    @Query("DELETE FROM questions_table")
-//    fun deleteQuestions()
+    //todo tekrar bakılacak test edildikten sonra
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertCategoryProgress(progressEntity: CategoryProgressEntity)
 
 
 

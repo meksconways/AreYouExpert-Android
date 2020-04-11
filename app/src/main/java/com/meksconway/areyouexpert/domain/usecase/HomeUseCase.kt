@@ -11,7 +11,6 @@ import com.meksconway.areyouexpert.enums.BannerCategory
 import com.meksconway.areyouexpert.util.Res
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -96,16 +95,16 @@ fun List<QuizCategories>.mapToEntity(): List<QuizCategoryEntity> {
     return map { it.mapToEntity() }
 }
 
-fun List<QuizCategories>.mapToCategoryModel(): List<CategoriesListModel> {
+fun List<QuizCategories>.mapToCategoryModel(): List<CategoryModel> {
     return map { it.mapToEntity().mapToCategoriesModel() }
 }
 
-fun List<QuizCategoryEntity>.mapToCategory(): List<CategoriesListModel> {
+fun List<QuizCategoryEntity>.mapToCategory(): List<CategoryModel> {
     return map { it.mapToCategoriesModel() }
 }
 
-fun QuizCategoryEntity.mapToCategoriesModel(): CategoriesListModel {
-    return CategoriesListModel(Id, progress, name, Decider.getCategoryResources(Id))
+fun QuizCategoryEntity.mapToCategoriesModel(): CategoryModel {
+    return CategoryModel(Id, progress, name, Decider.getCategoryResources(Id))
 }
 
 fun QuizCategories.mapToEntity(): QuizCategoryEntity {
@@ -145,7 +144,7 @@ data class TitleModel(val title: String) : HomeItemType {
 //***************** TITLE **********************************
 
 
-data class CategoriesListModel(
+data class CategoryModel(
     val id: Int,
     val progress: Int,
     val name: String,

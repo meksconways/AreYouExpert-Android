@@ -2,8 +2,8 @@ package com.meksconway.areyouexpert.datasource.local
 
 import com.meksconway.areyouexpert.data.datasource.local.RoomLocalDataSource
 import com.meksconway.areyouexpert.data.service.local.DaoService
+import com.meksconway.areyouexpert.data.service.local.entity.CategoryProgressEntity
 import com.meksconway.areyouexpert.data.service.local.entity.NotificationEntity
-import com.meksconway.areyouexpert.data.service.local.entity.QuestionEntity
 import com.meksconway.areyouexpert.data.service.local.entity.QuizCategoryEntity
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -41,17 +41,13 @@ class RoomLocalDataSourceImpl
         daoService.deleteNotificationList()
     }
 
-//    override fun getQuestions(): Observable<List<QuestionEntity>> = daoService
-//        .getQuestions().toObservable()
-//
-//
-//    override fun insertQuestion(question: QuestionEntity) {
-//        daoService.insertQuestion(question)
-//    }
-//
-//    override fun deleteQuestions() {
-//        daoService.deleteQuestions()
-//    }
+    override fun getCategoryProgressEntity(): Observable<List<CategoryProgressEntity>> {
+        return daoService.getCategoryProgressEntity().toObservable()
+    }
+
+    override fun insertProgressEntity(progressEntity: CategoryProgressEntity) {
+        daoService.insertCategoryProgress(progressEntity)
+    }
 
 
 }

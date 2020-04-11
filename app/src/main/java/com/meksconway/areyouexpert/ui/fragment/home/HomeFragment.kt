@@ -1,19 +1,24 @@
 package com.meksconway.areyouexpert.ui.fragment.home
 
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
-import com.meksconway.areyouexpert.domain.usecase.ContentItemType
+import com.meksconway.areyouexpert.domain.usecase.CategoryModel
+import com.meksconway.areyouexpert.domain.usecase.ContentItemType.*
 import com.meksconway.areyouexpert.domain.usecase.HomeContentModel
-import com.meksconway.areyouexpert.domain.usecase.HomeItemType
 import com.meksconway.areyouexpert.extension.viewextension.gone
 import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.adapter.HomeContentAdapter
+import com.meksconway.areyouexpert.ui.fragment.categoryonbard.CategoryOnBoardFragment
+import com.meksconway.areyouexpert.ui.fragment.categoryonbard.CategoryOnBoardViewModel
 import com.meksconway.areyouexpert.ui.fragment.notification.NotificationFragment
 import com.meksconway.areyouexpert.ui.fragment.settings.SettingsFragment
 import com.meksconway.areyouexpert.util.Res
@@ -26,8 +31,22 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
     override val layRes: Int
         get() = R.layout.home_fragment
 
+    private val categoryOnBoardViewModel: CategoryOnBoardViewModel by activityViewModels {
+        factory
+    }
+
     private val adapter: HomeContentAdapter by lazy {
-        HomeContentAdapter()
+        HomeContentAdapter {
+            when (it.getItemType()) {
+                CATEGORY -> {
+                    Log.d("***data",(it as CategoryModel).toString())
+                    categoryOnBoardViewModel.input.getContent(it as CategoryModel)
+                    navigator?.start(CategoryOnBoardFragment())
+                }
+                BANNER -> {}
+                TITLE -> {}
+            }
+        }
     }
 
     override val viewModel: HomeViewModel by viewModels {
@@ -39,8 +58,6 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
             checkHomeContentOutput(it)
         })
     }
-
-    private val list = arrayListOf<HomeItemType>()
 
     override fun viewDidLoad() {
         super.viewDidLoad()
@@ -108,9 +125,9 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (list[position].getItemType()) {
-                            ContentItemType.BANNER -> 2
-                            ContentItemType.CATEGORY -> 1
-                            ContentItemType.TITLE -> 2
+                            BANNER -> 2
+                            CATEGORY -> 1
+                            TITLE -> 2
                         }
                     }
                 }
