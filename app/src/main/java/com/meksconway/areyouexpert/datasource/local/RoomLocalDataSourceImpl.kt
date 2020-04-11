@@ -13,7 +13,7 @@ class RoomLocalDataSourceImpl
 @Inject constructor(private val daoService: DaoService,
                     private val db: ExpertDatabase) : RoomLocalDataSource {
 
-    override fun dropDataBase() {
+    override fun dropDatabase() {
         db.clearAllTables()
     }
 

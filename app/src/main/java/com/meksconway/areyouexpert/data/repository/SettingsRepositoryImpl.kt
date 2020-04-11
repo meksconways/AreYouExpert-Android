@@ -6,5 +6,7 @@ import javax.inject.Inject
 
 class SettingsRepositoryImpl
 @Inject constructor(private val source: RoomLocalDataSource) : SettingsRepository {
-
+    override fun dropDatabase() {
+        TODO("Not yet implemented")
+    }
 }
