@@ -39,8 +39,8 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
         HomeContentAdapter {
             when (it.getItemType()) {
                 CATEGORY -> {
-                    Log.d("***data",(it as CategoryModel).toString())
                     categoryOnBoardViewModel.input.getContent(it as CategoryModel)
+                    categoryOnBoardViewModel.input.setButtonColor(it.resources.primaryColor)
                     navigator?.start(CategoryOnBoardFragment())
                 }
                 BANNER -> {}

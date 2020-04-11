@@ -151,6 +151,9 @@ data class CategoryModel(
     val resources: QuizCategoryResources
 
 ) : HomeItemType {
+
+    fun getProgressPercent(): String = "Achievement: ${progress * 10}%"
+
     override fun getItemType() = ContentItemType.CATEGORY
     override fun getContentId() = id
 }

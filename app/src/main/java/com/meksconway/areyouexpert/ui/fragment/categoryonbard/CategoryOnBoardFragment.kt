@@ -1,6 +1,7 @@
 package com.meksconway.areyouexpert.ui.fragment.categoryonbard
 
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,13 +49,17 @@ class CategoryOnBoardFragment :
 
     override fun observeViewModel(output: CategoryOnBoardOutput?) {
         output?.contentOutput?.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context,it.status.toString(),Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, it.status.toString(), Toast.LENGTH_SHORT).show()
             checkOutput(it)
+        })
+
+        output?.buttonColorOutput?.observe(viewLifecycleOwner, Observer {
+            btnStart.backgroundTintList = ContextCompat.getColorStateList(requireContext(), it)
         })
     }
 
     private fun checkOutput(resource: Res<List<CategoryOnBoardItem>>) {
-        when(resource.status) {
+        when (resource.status) {
             SUCCESS -> {
                 progressBar.gone()
                 rvCategoryOnBoard.visible()

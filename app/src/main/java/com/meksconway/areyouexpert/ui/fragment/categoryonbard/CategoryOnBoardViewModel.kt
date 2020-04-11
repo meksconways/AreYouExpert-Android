@@ -1,5 +1,6 @@
 package com.meksconway.areyouexpert.ui.fragment.categoryonbard
 
+import androidx.annotation.ColorRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.meksconway.areyouexpert.domain.usecase.CategoryModel
@@ -15,10 +16,12 @@ import javax.inject.Inject
 
 interface CategoryOnBoardInput : Input {
     fun getContent(category: CategoryModel)
+    fun setButtonColor(@ColorRes colorRes: Int)
 }
 
 interface CategoryOnBoardOutput : Output {
     val contentOutput: LiveData<Res<List<CategoryOnBoardItem>>>
+    val buttonColorOutput: LiveData<Int>
 }
 
 class CategoryOnBoardViewModel @Inject constructor(
@@ -41,10 +44,18 @@ class CategoryOnBoardViewModel @Inject constructor(
             .addTo(compositeDisposable)
     }
 
+    override fun setButtonColor(@ColorRes colorRes: Int) {
+        _buttonColorOutput.value = colorRes
+    }
+
 
     private val _contentOutput = MutableLiveData<Res<List<CategoryOnBoardItem>>>()
     override val contentOutput: LiveData<Res<List<CategoryOnBoardItem>>>
         get() = _contentOutput
+
+    private val _buttonColorOutput = MutableLiveData<Int>()
+    override val buttonColorOutput: LiveData<Int>
+        get() = _buttonColorOutput
 
 
 }

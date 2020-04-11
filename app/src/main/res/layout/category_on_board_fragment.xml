@@ -3,17 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.categoryonbard.CategoryOnBoardFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCategoryOnBoard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="54dp"
+        android:clipToPadding="false"
+        />
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:id="@+id/btnStart"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        app:backgroundTint="@color/colorPrimary"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:stateListAnimator="@null"
+        android:insetRight="0dp"
+        android:insetLeft="0dp"
+        android:insetBottom="0dp"
+        android:insetTop="0dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        android:text="START"
+        />
 
 </FrameLayout>

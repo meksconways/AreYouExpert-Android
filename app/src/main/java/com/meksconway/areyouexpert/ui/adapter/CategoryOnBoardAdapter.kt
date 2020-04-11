@@ -1,11 +1,15 @@
 package com.meksconway.areyouexpert.ui.adapter
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.domain.usecase.CategoryOnBoardHeaderModel
 import com.meksconway.areyouexpert.domain.usecase.CategoryOnBoardItem
@@ -78,15 +82,32 @@ class CategoryOnBoardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind(model: CategoryOnBoardHeaderModel) {
             headerImage.setImageResource(model.model.resources.drawableRes)
             headerText?.text = model.model.name
+//            headerImage?.setColorFilter(ContextCompat.getColor(itemView.context,
+//                model.model.resources.primaryColor))
+//            headerImage?.alpha = 0.5f
         }
 
     }
 
     class CategoryOnBoardProgressVH(itemView: View): RecyclerView.ViewHolder(itemView) {
 
+        private val progressText = itemView.findViewById<TextView>(R.id.txtCategoryOnBoardProgressTitle)
+        private val progressView = itemView.findViewById<RoundCornerProgressBar>(R.id.prCategoryOnProgress)
 
-
+        @SuppressLint("SetTextI18n")
         fun bind(model: CategoryProgressModel) {
+            Log.d("***model",model.toString())
+            progressText?.text = model.content.getProgressPercent()
+            progressView?.post {
+                progressView.max = 10f
+                progressView.progress = model.progress.toFloat()
+                progressView.progressColor = ContextCompat.getColor(itemView.context, model.content.resources.primaryColor)
+                progressView.secondaryProgress = 10f
+                progressView.secondaryProgressColor = ContextCompat.getColor(itemView.context, model.content.resources.lightColor)
+                progressView.animate()
+                progressView.requestLayout()
+            }
+
 
         }
 
