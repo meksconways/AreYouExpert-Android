@@ -8,7 +8,7 @@ import android.os.Bundle
 import com.meksconway.areyouexpert.R
 import kotlinx.android.synthetic.main.dialog_reset_progress.*
 
-class DropDatabaseDialog(context: Context, private val callback: (Boolean) -> Unit) : Dialog(context) {
+class ResetProgressDialog(context: Context, private val callback: (Boolean) -> Unit) : Dialog(context) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,9 +16,11 @@ class DropDatabaseDialog(context: Context, private val callback: (Boolean) -> Un
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         btnYes.setOnClickListener{
             callback.invoke(true)
+            this.dismiss()
         }
         btnNo.setOnClickListener{
             callback(false)
+            this.dismiss()
         }
     }
 

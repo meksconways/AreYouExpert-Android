@@ -1,5 +1,6 @@
 package com.meksconway.areyouexpert.ui.fragment.settings
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.meksconway.areyouexpert.domain.usecase.SettingsModel
 import com.meksconway.areyouexpert.domain.usecase.SettingsUseCase
@@ -18,13 +19,13 @@ import javax.inject.Inject
 interface SettingsViewModelInput : Input {
 
     fun getSettings()
-    fun getDropAllDatabase()
+    fun resetProgress()
     fun clickSettings(id: Int)
 }
 
 interface SettingsViewModelOutput : Output {
-    val settingsOutput: MutableLiveData<Res<List<SettingsModel>>>
-    val deleteOutput: MutableLiveData<Res<SettingsModel>>
+    val settingsOutput: LiveData<Res<List<SettingsModel>>>
+    val resetProgressOutput: LiveData<Res<Boolean>>
 }
 
 class SettingsViewModel
@@ -42,21 +43,29 @@ class SettingsViewModel
         useCase.getSettingsList()
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { settingsOutput.value = Res.success(it) }
+            .subscribe { _settingsOutput.value = Res.success(it) }
             .addTo(compositeDisposable)
     }
 
-    override fun getDropAllDatabase() {
-        useCase.dropDatabase()
-            .subscribeOn(Schedulers.computation())
+    override fun resetProgress() {
+        useCase.resetProgress()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { }
+            .subscribe {
+                _resetProgressOutput.value = it
+            }
             .addTo(compositeDisposable)
     }
 
     override fun clickSettings(id: Int) {
 
     }
-    override val settingsOutput = MutableLiveData<Res<List<SettingsModel>>>()
-    override val deleteOutput =  MutableLiveData<Res<SettingsModel>>()
+
+    //outputs
+    private val _settingsOutput = MutableLiveData<Res<List<SettingsModel>>>()
+    override val settingsOutput: LiveData<Res<List<SettingsModel>>>
+        get() = _settingsOutput
+
+    private val _resetProgressOutput =  MutableLiveData<Res<Boolean>>()
+    override val resetProgressOutput: LiveData<Res<Boolean>>
+        get() = _resetProgressOutput
 }

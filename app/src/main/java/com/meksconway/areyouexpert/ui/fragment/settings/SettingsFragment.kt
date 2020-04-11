@@ -1,14 +1,22 @@
 package com.meksconway.areyouexpert.ui.fragment.settings
 
+import android.content.Intent
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
+import com.meksconway.areyouexpert.domain.usecase.SettingsItemType.*
 import com.meksconway.areyouexpert.domain.usecase.SettingsModel
+import com.meksconway.areyouexpert.extension.viewextension.gone
+import com.meksconway.areyouexpert.extension.viewextension.visible
+import com.meksconway.areyouexpert.ui.activity.splash.SplashActivity
 import com.meksconway.areyouexpert.ui.adapter.SettingsAdapter
+import com.meksconway.areyouexpert.ui.view.ResetProgressDialog
 import com.meksconway.areyouexpert.util.Res
+import com.meksconway.areyouexpert.util.Status
 import com.meksconway.areyouexpert.util.ToolbarConfigration
 import kotlinx.android.synthetic.main.settings_fragment.*
 
@@ -18,7 +26,30 @@ class SettingsFragment :
     override val layRes: Int
         get() = R.layout.settings_fragment
 
-    private val adapter = SettingsAdapter()
+    private val adapter = SettingsAdapter {
+        when (it.type) {
+            MAKE_SUGGESTION -> {
+                //show make-sug-fragment
+            }
+            RESET_PROGRESS -> {
+                showResetProgressDialog()
+            }
+            VOTE -> {
+                //show popup
+            }
+            OPEN_SOURCE -> {
+                // show open source fragment
+            }
+        }
+    }
+
+    private fun showResetProgressDialog() {
+        ResetProgressDialog(requireContext()) {
+            if (it) viewModel.input.resetProgress()
+        }.show()
+
+    }
+
     private val layoutManager = LinearLayoutManager(context)
 
     override val viewModel: SettingsViewModel by viewModels {
@@ -36,6 +67,26 @@ class SettingsFragment :
     override fun observeViewModel(output: SettingsViewModelOutput?) {
         output?.settingsOutput?.observe(viewLifecycleOwner, Observer {
             checkSettingsContentOutput(it)
+        })
+        output?.resetProgressOutput?.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressBar.gone()
+                    rvSettings.visible()
+                    startActivity(Intent(context, SplashActivity::class.java))
+                    activity?.finish()
+                }
+                Status.LOADING -> {
+                    progressBar.visible()
+                    rvSettings.gone()
+                }
+
+                Status.ERROR -> {
+                    progressBar.gone()
+                    rvSettings.visible()
+                    Toast.makeText(context, it.error?.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
+            }
         })
     }
 
