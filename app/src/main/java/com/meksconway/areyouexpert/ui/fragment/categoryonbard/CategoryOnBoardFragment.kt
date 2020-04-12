@@ -11,6 +11,7 @@ import com.meksconway.areyouexpert.domain.usecase.CategoryOnBoardItem
 import com.meksconway.areyouexpert.extension.viewextension.gone
 import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.adapter.CategoryOnBoardAdapter
+import com.meksconway.areyouexpert.ui.fragment.quiz.QuizFragment
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status.*
 import com.meksconway.areyouexpert.util.ToolbarConfigration
@@ -41,10 +42,12 @@ class CategoryOnBoardFragment :
 
     override fun viewDidLoad() {
         super.viewDidLoad()
-        adapter.setHasStableIds(true)
         rvCategoryOnBoard.layoutManager = LinearLayoutManager(context)
         rvCategoryOnBoard.adapter = adapter
         rvCategoryOnBoard.setItemViewCacheSize(8)
+        btnStart.setOnClickListener {
+            navigator?.start(QuizFragment())
+        }
     }
 
     override fun observeViewModel(output: CategoryOnBoardOutput?) {
