@@ -20,4 +20,6 @@ Click the Text tab to show the XML view of your navigation graph. The XML contai
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="warning">Warning !</string>
+    <string name="send_suggestion">SEND SUGGESTION</string>
+    <string name="suggestion">Enter Your Message</string>
 </resources>
