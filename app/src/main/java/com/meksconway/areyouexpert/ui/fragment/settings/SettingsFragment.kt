@@ -1,11 +1,14 @@
 package com.meksconway.areyouexpert.ui.fragment.settings
 
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.codemybrainsout.ratingdialog.RatingDialog
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
 import com.meksconway.areyouexpert.domain.usecase.SettingsItemType.*
@@ -19,6 +22,7 @@ import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status
 import com.meksconway.areyouexpert.util.ToolbarConfigration
 import kotlinx.android.synthetic.main.settings_fragment.*
+
 
 class SettingsFragment :
     BaseFragment<SettingsViewModelInput, SettingsViewModelOutput, SettingsViewModel>() {
@@ -35,7 +39,7 @@ class SettingsFragment :
                 showResetProgressDialog()
             }
             VOTE -> {
-                //show popup
+                showVoteDialog()
             }
             OPEN_SOURCE -> {
                 // show open source fragment
@@ -106,4 +110,25 @@ class SettingsFragment :
         }
 
     }
+
+    private fun showVoteDialog() {
+        val ratingDialog:RatingDialog= RatingDialog.Builder(context)
+            .threshold(3f)
+            .title("How was your experience with us?")
+            .positiveButtonText("Not Now")
+            .negativeButtonText("Never")
+            .formTitle("Submit Feedback")
+            .formHint("Tell us where we can improve")
+            .formSubmitText("Submit")
+            .formCancelText("Cancel")
+            .ratingBarColor(R.color.catGadgetsLightColor)
+            .playstoreUrl("https://github.com/codemybrainsout/smart-app-rate")
+            .onThresholdCleared { ratingDialog, rating, thresholdCleared -> ratingDialog.dismiss() }
+            .onThresholdFailed { ratingDialog, rating, thresholdCleared -> ratingDialog.dismiss() }
+            .onRatingChanged(RatingDialog.Builder.RatingDialogListener { rating, thresholdCleared -> })
+            .onRatingBarFormSumbit { feedback -> Log.i(TAG, "Feedback:$feedback") }
+            .build()
+        ratingDialog.show()
+    }
+
 }
