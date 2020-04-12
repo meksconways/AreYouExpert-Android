@@ -1,20 +1,21 @@
 package com.meksconway.areyouexpert.ui.fragment.makesuggestion
 
-import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.jakewharton.rxbinding3.widget.textChanges
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
-import com.meksconway.areyouexpert.extension.viewextension.gone
-import com.meksconway.areyouexpert.util.Res
-import com.meksconway.areyouexpert.util.Status
 import com.meksconway.areyouexpert.util.ToolbarConfigration
-import kotlinx.android.synthetic.main.home_fragment.*
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
+import kotlinx.android.synthetic.main.make_suggestion_fragment.*
 
 class MakeSuggestionFragment :
     BaseFragment<MakeSuggestionViewModelInput, MakeSuggestionViewModelOutput,
             MakeSuggestionViewModel>() {
 
+
+    private val compositeDisposable = CompositeDisposable()
 
     override val viewModel: MakeSuggestionViewModel by viewModels {
         factory
@@ -27,31 +28,28 @@ class MakeSuggestionFragment :
     }
 
     override fun observeViewModel(output: MakeSuggestionViewModelOutput?) {
-        output?.sendData?.observe(viewLifecycleOwner, Observer {
-            checkMakeSuggestionContentOutput(it)
+        output?.suggestionStringOutput?.observe(viewLifecycleOwner, Observer {
+            btnSend.isEnabled = it.isNullOrBlank().not()
         })
     }
 
+    override fun onDestroyView() {
+        compositeDisposable.clear()
+        super.onDestroyView()
+    }
+
+
     override fun viewDidLoad() {
         super.viewDidLoad()
-    }
 
-    private fun checkMakeSuggestionContentOutput(resource: Res<String>) {
-        when (resource.status) {
-            Status.SUCCESS -> {
-
-            }
-            Status.ERROR -> {
-
-            }
-            Status.LOADING -> {
-
-            }
-        }
-    }
-    private fun hideProgress(){
-        progressBar.gone()
+        txtInputMakeSuggestion.textChanges()
+            .map { it.toString() }
+            .subscribe {
+                viewModel.input.sendSuggestion(it)
+            }.addTo(compositeDisposable)
 
     }
+
+
 
 }

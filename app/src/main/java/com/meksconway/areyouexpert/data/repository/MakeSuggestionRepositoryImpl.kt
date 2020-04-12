@@ -4,6 +4,6 @@ import com.meksconway.areyouexpert.domain.repository.MakeSuggestionRepository
 import javax.inject.Inject
 
 class MakeSuggestionRepositoryImpl
-@Inject constructor(): MakeSuggestionRepository(){
+@Inject constructor() : MakeSuggestionRepository {
 
 }

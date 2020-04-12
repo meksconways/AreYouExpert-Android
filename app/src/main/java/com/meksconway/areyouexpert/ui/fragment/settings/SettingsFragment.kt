@@ -31,7 +31,7 @@ class SettingsFragment :
     private val adapter = SettingsAdapter {
         when (it.type) {
             MAKE_SUGGESTION -> {
-                navigator?.start(Fragment(R.layout.make_suggestion_fragment))
+                navigator?.start(MakeSuggestionFragment())
             }
             RESET_PROGRESS -> {
                 showResetProgressDialog()
@@ -100,11 +100,10 @@ class SettingsFragment :
     }
 
     private fun setAdapter(list: List<SettingsModel>?) {
-        adapter.setHasStableIds(true)
         rvSettings?.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         list?.let {
             rvSettings?.adapter = adapter
-            rvSettings?.layoutManager = layoutManager
+            rvSettings?.layoutManager = LinearLayoutManager(context)
             adapter.setItems(it)
         }
 

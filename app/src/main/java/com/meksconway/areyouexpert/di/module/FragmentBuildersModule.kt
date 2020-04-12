@@ -1,6 +1,7 @@
 package com.meksconway.areyouexpert.di.module
 
 import com.meksconway.areyouexpert.ui.fragment.home.HomeFragment
+import com.meksconway.areyouexpert.ui.fragment.makesuggestion.MakeSuggestionFragment
 import com.meksconway.areyouexpert.ui.fragment.notification.NotificationFragment
 import com.meksconway.areyouexpert.ui.fragment.settings.SettingsFragment
 import dagger.Module
@@ -17,5 +18,8 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeSettingsFragment(): SettingsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeMakeSuggestionFragment(): MakeSuggestionFragment
 
 }

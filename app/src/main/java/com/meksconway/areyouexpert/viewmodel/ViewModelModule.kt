@@ -6,6 +6,7 @@ import com.meksconway.areyouexpert.di.ViewModelKey
 import com.meksconway.areyouexpert.ui.activity.main.MainAcitivityViewModel
 import com.meksconway.areyouexpert.ui.adapter.SettingsAdapter
 import com.meksconway.areyouexpert.ui.fragment.home.HomeViewModel
+import com.meksconway.areyouexpert.ui.fragment.makesuggestion.MakeSuggestionViewModel
 import com.meksconway.areyouexpert.ui.fragment.notification.NotificationViewModel
 import com.meksconway.areyouexpert.ui.fragment.settings.SettingsViewModel
 import dagger.Binds
@@ -34,6 +35,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainAcitivityViewModel::class)
     abstract fun bindMainViewModel(vm: MainAcitivityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MakeSuggestionViewModel::class)
+    abstract fun bindMakeSuggestionViewModel(vm: MakeSuggestionViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

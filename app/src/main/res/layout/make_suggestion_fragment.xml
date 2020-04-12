@@ -10,22 +10,26 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/outlinedTextField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/suggestion"
-        android:textColorHint="@color/colorAccent"
+        app:boxStrokeColor="@color/white"
+        app:hintEnabled="true"
+        android:textColorHint="@color/white"
+        app:hintTextColor="@color/white"
+        android:layout_margin="16dp"
         app:boxStrokeWidth="1dp"
         app:boxStrokeWidthFocused="2dp"
-        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.SmallComponent">
+        app:boxBackgroundMode="outline"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtInputMakeSuggestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/colorAccent"
-            android:enabled="true" />
+            android:textColor="@color/white"
+            android:hint="Enter Your Message"
+            android:textSize="16sp" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -38,13 +42,14 @@
             android:id="@+id/btnSend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/send_suggestion"
-            android:backgroundTint="@color/catArtDarkColor"
-            android:textColor="@color/colorAccent"
-            android:insetBottom="0dp"
+            android:insetLeft="0dp"
             android:insetTop="0dp"
             android:insetRight="0dp"
-            android:insetLeft="0dp"
+            android:insetBottom="0dp"
+            android:stateListAnimator="@null"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:text="@string/send_suggestion"
+            android:textColor="@color/white"
             app:cornerRadius="8dp" />
     </LinearLayout>
 
