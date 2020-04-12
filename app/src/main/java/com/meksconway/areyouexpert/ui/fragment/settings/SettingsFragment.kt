@@ -113,20 +113,26 @@ class SettingsFragment :
 
     private fun showVoteDialog() {
         val ratingDialog:RatingDialog= RatingDialog.Builder(context)
-            .threshold(3f)
+            .threshold(3F)
+            .formSubmitText("text")
             .title("How was your experience with us?")
-            .positiveButtonText("Not Now")
-            .negativeButtonText("Never")
+            .positiveButtonText("Ok")
+            .negativeButtonText("never")
+            .positiveButtonTextColor(R.color.colorPrimary)
+            .negativeButtonTextColor(R.color.colorPrimary)
+
+/*             feedback popup için gerekli kısım
             .formTitle("Submit Feedback")
             .formHint("Tell us where we can improve")
             .formSubmitText("Submit")
-            .formCancelText("Cancel")
-            .ratingBarColor(R.color.catGadgetsLightColor)
-            .playstoreUrl("https://github.com/codemybrainsout/smart-app-rate")
-            .onThresholdCleared { ratingDialog, rating, thresholdCleared -> ratingDialog.dismiss() }
-            .onThresholdFailed { ratingDialog, rating, thresholdCleared -> ratingDialog.dismiss() }
-            .onRatingChanged(RatingDialog.Builder.RatingDialogListener { rating, thresholdCleared -> })
-            .onRatingBarFormSumbit { feedback -> Log.i(TAG, "Feedback:$feedback") }
+            .formCancelText("Cancel")*/
+
+            .ratingBarColor(R.color.colorPrimary)
+            //.playstoreUrl("https://github.com/codemybrainsout/smart-app-rate")
+            .onThresholdCleared { ratingDialog, rating, thresholdCleared ->  }
+            /*
+            //feedback sayfasına yönlendirmek için kullanılacak
+            .onThresholdFailed()*/
             .build()
         ratingDialog.show()
     }
