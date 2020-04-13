@@ -1,34 +1,52 @@
 package com.meksconway.areyouexpert.ui.fragment.home
 
 import android.util.Log
-import android.widget.Toast
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
-import com.meksconway.areyouexpert.domain.usecase.ContentItemType
+import com.meksconway.areyouexpert.domain.usecase.CategoryModel
+import com.meksconway.areyouexpert.domain.usecase.ContentItemType.*
 import com.meksconway.areyouexpert.domain.usecase.HomeContentModel
-import com.meksconway.areyouexpert.enums.Resource
+import com.meksconway.areyouexpert.extension.viewextension.gone
+import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.adapter.HomeContentAdapter
+import com.meksconway.areyouexpert.ui.fragment.categoryonbard.CategoryOnBoardFragment
+import com.meksconway.areyouexpert.ui.fragment.categoryonbard.CategoryOnBoardViewModel
+import com.meksconway.areyouexpert.ui.fragment.notification.NotificationFragment
+import com.meksconway.areyouexpert.ui.fragment.settings.SettingsFragment
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status
+import com.meksconway.areyouexpert.util.ToolbarConfigration
 import kotlinx.android.synthetic.main.home_fragment.*
-import javax.inject.Inject
 
 class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeViewModel>() {
 
     override val layRes: Int
         get() = R.layout.home_fragment
 
-    private val adapter = HomeContentAdapter()
-    val pool = RecyclerView.RecycledViewPool()
+    private val categoryOnBoardViewModel: CategoryOnBoardViewModel by activityViewModels {
+        factory
+    }
 
-
-    override fun viewDidLoad() {
-        super.viewDidLoad()
+    private val adapter: HomeContentAdapter by lazy {
+        HomeContentAdapter {
+            when (it.getItemType()) {
+                CATEGORY -> {
+                    categoryOnBoardViewModel.input.getContent(it as CategoryModel)
+                    categoryOnBoardViewModel.input.setButtonColor(it.resources.primaryColor)
+                    navigator?.start(CategoryOnBoardFragment())
+                }
+                BANNER -> {}
+                TITLE -> {}
+            }
+        }
     }
 
     override val viewModel: HomeViewModel by viewModels {
@@ -37,13 +55,16 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
 
     override fun observeViewModel(output: HomeViewModelOutput?) {
         output?.homeContentOutput?.observe(viewLifecycleOwner, Observer {
-            //            checkHomeContentOutput(it)
-        })
-        viewModel._data.observe(viewLifecycleOwner, Observer {
             checkHomeContentOutput(it)
-            Log.d("***data", it.data.toString())
         })
+    }
 
+    override fun viewDidLoad() {
+        super.viewDidLoad()
+        rvHome?.setItemViewCacheSize(30)
+        rvHome?.setHasFixedSize(true)
+        rvHome?.layoutManager = GridLayoutManager(context, 2)
+        rvHome?.adapter = adapter
     }
 
 
@@ -51,50 +72,64 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
         when (resource.status) {
             Status.SUCCESS -> {
                 // set Adapter
+                hideLoading()
                 setAdapter(resource.data)
-                Toast.makeText(context, "veri geldi", Toast.LENGTH_SHORT).show()
             }
 
             Status.ERROR -> {
                 //show errors
-                Toast.makeText(context, resource.error?.localizedMessage, Toast.LENGTH_SHORT).show()
+                hideLoading()
             }
 
             Status.LOADING -> {
                 //show progress
-                Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
+                showLoading()
             }
         }
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        return inflater.inflate(R.menu.menu_home_fragment, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.settings -> {
+                navigator?.start(SettingsFragment().apply { canBack = true })
+                true
+            }
+            R.id.profile -> {
+                false
+            }
+            R.id.notification -> {
+                navigator?.start(NotificationFragment().apply { canBack = true })
+                true
+            }
+            else -> false
+        }
+    }
+
     private fun setAdapter(listItems: HomeContentModel?) {
-        adapter.setHasStableIds(true)
         listItems?.content?.let { list ->
-            val layoutManager = GridLayoutManager(context, 2)
-            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return when (list[position].getItemType()) {
-                        ContentItemType.BANNER -> 2
-                        ContentItemType.CATEGORY -> 1
-                        ContentItemType.TITLE -> 2
+            (rvHome.layoutManager as? GridLayoutManager)?.apply {
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when (list[position].getItemType()) {
+                            BANNER -> 2
+                            CATEGORY -> 1
+                            TITLE -> 2
+                        }
                     }
                 }
             }
-//            rvHome?.apply {
-//                setItemViewCacheSize(15)
-//                setHasFixedSize(true)
-//                this.layoutManager = layoutManager
-//                adapter = adapter
-//
-//            }
-            rvHome.setRecycledViewPool(pool)
-            rvHome?.setItemViewCacheSize(12)
-            rvHome?.setHasFixedSize(true)
-            rvHome?.adapter = adapter
-            rvHome?.layoutManager = layoutManager
             adapter.setItems(list)
         }
 
+    }
+
+    override fun setToolbarConfig(): ToolbarConfigration {
+        return ToolbarConfigration("Are You Expert", true, canBack = false)
     }
 
 

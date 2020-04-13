@@ -1,23 +1,16 @@
 package com.meksconway.areyouexpert.ui.fragment.home
 
-import android.util.Log
-import androidx.annotation.NavigationRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.meksconway.areyouexpert.data.service.local.entity.NotificationEntity
 import com.meksconway.areyouexpert.domain.usecase.HomeContentModel
 import com.meksconway.areyouexpert.domain.usecase.HomeUseCase
 import com.meksconway.areyouexpert.enums.BannerCategory
-import com.meksconway.areyouexpert.enums.Resource
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.viewmodel.BaseViewModel
 import com.meksconway.areyouexpert.viewmodel.Input
 import com.meksconway.areyouexpert.viewmodel.Output
+import com.meksconway.areyouexpert.viewmodel.SingleLiveEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
 interface HomeViewModelInput : Input {
@@ -32,7 +25,7 @@ interface HomeViewModelInput : Input {
 
 interface HomeViewModelOutput : Output {
 
-    var homeContentOutput: MediatorLiveData<Resource<HomeContentModel>>
+    val homeContentOutput: MutableLiveData<Res<HomeContentModel>>
 
 }
 
@@ -45,25 +38,18 @@ class HomeViewModel
     override val output: HomeViewModelOutput = this
 
     init {
-        getContent()
-    }
-
-    val _data = MutableLiveData<Res<HomeContentModel>>()
-
-    private fun getContent() {
-        useCase.getHomeContent()
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {
-                _data.value = it
-            }
-            .subscribe()
-            .addTo(compositeDisposable)
-
+        getHomeContent()
     }
 
     //inputs
     override fun getHomeContent() {
-
+        useCase.getHomeContent()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext {
+                homeContentOutput.value = it
+            }
+            .subscribe()
+            .addTo(compositeDisposable)
     }
 
     override fun selectCategory(catId: Int) {
@@ -82,7 +68,7 @@ class HomeViewModel
 
     }
 
-    override var homeContentOutput = MediatorLiveData<Resource<HomeContentModel>>()
+    override val homeContentOutput = MutableLiveData<Res<HomeContentModel>>()
 
 
 }

@@ -6,6 +6,7 @@ import com.meksconway.areyouexpert.data.service.local.entity.QuizCategoryEntity
 import com.meksconway.areyouexpert.data.service.remote.model.QuizCategories
 import com.meksconway.areyouexpert.domain.repository.HomeRepository
 import com.meksconway.areyouexpert.util.Res
+import com.meksconway.areyouexpert.util.local
 import com.meksconway.areyouexpert.util.remote
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers

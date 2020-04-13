@@ -1,5 +1,6 @@
 package com.meksconway.areyouexpert.domain.usecase
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.common.Decider
@@ -11,8 +12,8 @@ import com.meksconway.areyouexpert.enums.BannerCategory
 import com.meksconway.areyouexpert.util.Res
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,7 +34,6 @@ class HomeUseCase
             homeContent.content.add(createTitle())
 
             repository.getLocalCategories()
-                .observeOn(AndroidSchedulers.mainThread())
                 .map {
                     if (it.isNullOrEmpty()) {
                         repository.getRemoteCategories()
@@ -42,7 +42,6 @@ class HomeUseCase
                                     Completable.fromAction {
                                         repository.insertCategoryList(quiz.mapToEntity())
                                     }.subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe {
                                             homeContent.content.addAll(quiz.mapToCategoryModel())
                                             emitter.onNext(Res.success(homeContent))
@@ -98,16 +97,16 @@ fun List<QuizCategories>.mapToEntity(): List<QuizCategoryEntity> {
     return map { it.mapToEntity() }
 }
 
-fun List<QuizCategories>.mapToCategoryModel(): List<CategoriesListModel> {
+fun List<QuizCategories>.mapToCategoryModel(): List<CategoryModel> {
     return map { it.mapToEntity().mapToCategoriesModel() }
 }
 
-fun List<QuizCategoryEntity>.mapToCategory(): List<CategoriesListModel> {
+fun List<QuizCategoryEntity>.mapToCategory(): List<CategoryModel> {
     return map { it.mapToCategoriesModel() }
 }
 
-fun QuizCategoryEntity.mapToCategoriesModel(): CategoriesListModel {
-    return CategoriesListModel(Id, progress, name, Decider.getCategoryResources(Id))
+fun QuizCategoryEntity.mapToCategoriesModel(): CategoryModel {
+    return CategoryModel(Id, progress, name, Decider.getCategoryResources(Id))
 }
 
 fun QuizCategories.mapToEntity(): QuizCategoryEntity {
@@ -146,14 +145,17 @@ data class TitleModel(val title: String) : HomeItemType {
 }
 //***************** TITLE **********************************
 
-
-data class CategoriesListModel(
+@Parcelize
+data class CategoryModel(
     val id: Int,
     val progress: Int,
     val name: String,
     val resources: QuizCategoryResources
 
-) : HomeItemType {
+): Parcelable, HomeItemType {
+
+    fun getProgressPercent(): String = "Achievement: ${progress * 10}%"
+
     override fun getItemType() = ContentItemType.CATEGORY
     override fun getContentId() = id
 }

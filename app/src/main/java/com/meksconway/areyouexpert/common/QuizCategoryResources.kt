@@ -1,8 +1,11 @@
 package com.meksconway.areyouexpert.common
 
+import android.os.Parcelable
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class QuizCategoryResources(
     @DrawableRes
     val drawableRes: Int,
@@ -11,4 +14,4 @@ data class QuizCategoryResources(
     @ColorRes
     val darkColor: Int,
     @ColorRes
-    val lightColor: Int)
+    val lightColor: Int): Parcelable

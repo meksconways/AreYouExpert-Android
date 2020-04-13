@@ -7,19 +7,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.domain.usecase.*
 
-class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeContentAdapter
+constructor(private val callback: ((HomeItemType) -> Unit)? = null) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val contentData = arrayListOf<HomeItemType>()
 
     override fun getItemViewType(position: Int): Int {
-        Log.d("***itemType", contentData[position].getItemType().toString())
         return when (contentData[position].getItemType()) {
             ContentItemType.CATEGORY -> ContentItemType.CATEGORY.ordinal
             ContentItemType.BANNER -> ContentItemType.BANNER.ordinal
@@ -30,7 +30,6 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemId(position: Int): Long {
         return contentData[position].getContentId().toLong()
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -68,23 +67,33 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (val model = contentData[position]) {
             is HomeBannerModel -> {
                 (holder as? BannerViewHolder)?.bind(model)
+                holder.itemView.setOnClickListener {
+                    callback?.invoke(model)
+                }
             }
             is TitleModel -> {
                 (holder as? TitleViewHolder)?.bind(model)
+                holder.itemView.setOnClickListener {
+                    callback?.invoke(model)
+                }
             }
-            is CategoriesListModel -> {
+            is CategoryModel -> {
                 (holder as? CategoryViewHolder)?.bind(model)
+                holder.itemView.setOnClickListener {
+                    callback?.invoke(model)
+                }
             }
         }
     }
 
     fun setItems(listItems: List<HomeItemType>?) {
+        contentData.clear()
         if (listItems != null) {
-            val diffCallback = HomeContentAdapterDiffUtil(contentData, listItems)
-            val diffResult = DiffUtil.calculateDiff(diffCallback)
-            contentData.clear()
+//            val diffCallback = HomeContentAdapterDiffUtil(contentData, listItems)
+//            val diffResult = DiffUtil.calculateDiff(diffCallback)
             contentData.addAll(listItems)
-            diffResult.dispatchUpdatesTo(this)
+            notifyDataSetChanged()
+//            diffResult.dispatchUpdatesTo(this)
         }
     }
 
@@ -130,12 +139,12 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        lateinit var model: CategoriesListModel
+        lateinit var model: CategoryModel
         private val titleText = itemView.findViewById<TextView>(R.id.txtCatTitle)
         private val catImage = itemView.findViewById<ImageView>(R.id.imgCategory)
         private val catBackground = itemView.findViewById<ImageView>(R.id.imgCategoryBackground)
 
-        fun bind(model: CategoriesListModel) {
+        fun bind(model: CategoryModel) {
             Log.d("***categoryVH", model.toString())
             this.model = model
             catImage.setColorFilter(
@@ -147,22 +156,6 @@ class HomeContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
             catImage.setImageResource(model.resources.drawableRes)
-//            Glide.with(itemView)
-//                .asBitmap()
-//                .load(model.resources.drawableRes)
-//                .into(object : CustomTarget<Bitmap>() {
-//                    override fun onLoadCleared(placeholder: Drawable?) {
-//
-//                    }
-//
-//                    override fun onResourceReady(
-//                        resource: Bitmap,
-//                        transition: Transition<in Bitmap>?
-//                    ) {
-//                        catImage.setImageBitmap(resource)
-//                    }
-//
-//                })
             titleText?.text = model.name
         }
 

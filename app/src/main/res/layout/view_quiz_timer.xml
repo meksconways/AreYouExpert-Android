@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+
+    <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+        android:id="@+id/prQuizTimer"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:rcBackgroundColor="@color/appToolbarBackground"
+        app:rcBackgroundPadding="2dp"
+        app:rcMax="15"
+        app:rcProgress="0"
+        app:rcProgressColor="@color/catArtPrimaryColor"
+        app:rcRadius="22dp"
+        app:rcSecondaryProgress="15"
+        app:rcSecondaryProgressColor="@color/catArtLightColor" />
+
+    <ImageView
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_vertical|end"
+        android:padding="10dp"
+        android:src="@drawable/ic_timer" />
+
+    <TextView
+        android:id="@+id/txtQuizTimer"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/opensans_bold"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+
+</FrameLayout>

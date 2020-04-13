@@ -10,7 +10,7 @@ interface TriviaRemoteDataSource {
 
     fun getQuestions(
         amount: String?,
-        category: String?,
+        categoryId: Int,
         difficulty: String?,
         type: String?,
         token: String?
