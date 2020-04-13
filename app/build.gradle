@@ -115,4 +115,7 @@ dependencies {
     testImplementation "junit:junit:$test_junit_version"
     androidTestImplementation "androidx.test.ext:junit:$junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressocore_version"
+
+    //smart-app-rate
+    implementation 'com.codemybrainsout.rating:ratingdialog:1.0.8'
 }

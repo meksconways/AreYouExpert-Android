@@ -2,6 +2,7 @@ package com.meksconway.areyouexpert.datasource.local
 
 import com.meksconway.areyouexpert.data.datasource.local.RoomLocalDataSource
 import com.meksconway.areyouexpert.data.service.local.DaoService
+import com.meksconway.areyouexpert.data.service.local.ExpertDatabase
 import com.meksconway.areyouexpert.data.service.local.entity.CategoryProgressEntity
 import com.meksconway.areyouexpert.data.service.local.entity.NotificationEntity
 import com.meksconway.areyouexpert.data.service.local.entity.QuizCategoryEntity
@@ -9,7 +10,12 @@ import io.reactivex.Observable
 import javax.inject.Inject
 
 class RoomLocalDataSourceImpl
-@Inject constructor(private val daoService: DaoService) : RoomLocalDataSource {
+@Inject constructor(private val daoService: DaoService,
+                    private val db: ExpertDatabase) : RoomLocalDataSource {
+
+    override fun dropDatabase() {
+        db.clearAllTables()
+    }
 
     override fun getQuizList(): Observable<List<QuizCategoryEntity>> = daoService
         .getQuizList().toObservable()

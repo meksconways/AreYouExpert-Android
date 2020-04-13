@@ -7,6 +7,8 @@ import io.reactivex.Observable
 
 interface RoomLocalDataSource {
 
+    fun dropDatabase()
+
     fun getQuizList(): Observable<List<QuizCategoryEntity>>
     fun insertQuiz(quizCategory: QuizCategoryEntity)
     fun insertQuizList(quizCategory: List<QuizCategoryEntity>)

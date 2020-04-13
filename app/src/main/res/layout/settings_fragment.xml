@@ -6,11 +6,17 @@
     tools:context=".ui.fragment.settings.SettingsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rvSettings"
         android:clipToPadding="false"
-        tools:listitem="@layout/item_settings"
-        />
+        tools:listitem="@layout/item_settings" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
 
 </FrameLayout>

@@ -7,6 +7,7 @@ import com.meksconway.areyouexpert.ui.activity.main.MainAcitivityViewModel
 import com.meksconway.areyouexpert.ui.adapter.SettingsAdapter
 import com.meksconway.areyouexpert.ui.fragment.categoryonbard.CategoryOnBoardViewModel
 import com.meksconway.areyouexpert.ui.fragment.home.HomeViewModel
+import com.meksconway.areyouexpert.ui.fragment.makesuggestion.MakeSuggestionViewModel
 import com.meksconway.areyouexpert.ui.fragment.notification.NotificationViewModel
 import com.meksconway.areyouexpert.ui.fragment.quiz.QuizViewModel
 import com.meksconway.areyouexpert.ui.fragment.settings.SettingsViewModel
@@ -48,6 +49,11 @@ abstract class ViewModelModule {
     abstract fun bindQuizViewModel(vm: QuizViewModel): ViewModel
 
 
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MakeSuggestionViewModel::class)
+    abstract fun bindMakeSuggestionViewModel(vm: MakeSuggestionViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
