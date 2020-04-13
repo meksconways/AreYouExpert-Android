@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
+            android:fontFamily="@font/opensans_semi_bold"
             android:text="General Knowledge"
             android:textColor="@color/white"
             android:textSize="28sp"

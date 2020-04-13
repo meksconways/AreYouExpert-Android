@@ -1,13 +1,7 @@
 package com.meksconway.areyouexpert.di.module
 
-import com.meksconway.areyouexpert.data.repository.CategoryOnBoardRepositoryImpl
-import com.meksconway.areyouexpert.data.repository.HomeRepositoryImpl
-import com.meksconway.areyouexpert.data.repository.NotificationRepositoryImpl
-import com.meksconway.areyouexpert.data.repository.SettingsRepositoryImpl
-import com.meksconway.areyouexpert.domain.repository.CategoryOnBoardRepository
-import com.meksconway.areyouexpert.domain.repository.HomeRepository
-import com.meksconway.areyouexpert.domain.repository.NotificationRepository
-import com.meksconway.areyouexpert.domain.repository.SettingsRepository
+import com.meksconway.areyouexpert.data.repository.*
+import com.meksconway.areyouexpert.domain.repository.*
 import dagger.Binds
 import dagger.Module
 
@@ -25,5 +19,8 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindCategoryOnBoardRepository(repository: CategoryOnBoardRepositoryImpl): CategoryOnBoardRepository
+
+    @Binds
+    abstract fun bindQuizRepository(repository: QuizRepositoryImpl): QuizRepository
 
 }

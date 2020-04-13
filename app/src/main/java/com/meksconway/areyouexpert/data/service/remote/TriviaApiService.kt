@@ -7,6 +7,7 @@ import com.meksconway.areyouexpert.data.service.remote.model.TokenGenerateRespon
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface TriviaApiService {
 
@@ -18,13 +19,20 @@ interface TriviaApiService {
                 "&type={type}" +
                 "&token={token}"
     )
-    fun getQuestions(
+    fun getQuestionss(
         @Path("amount") amount: String?,
         @Path("category") category: String?,
         @Path("difficulty") difficulty: String?,
         @Path("type") type: String?,
         @Path("token") token: String?
     ): Single<QuestionsResponse>
+
+    @GET(
+        "api.php?amount=10"
+    )
+    fun getQuestions(
+        @Query("category") category: Int
+        ): Single<QuestionsResponse>
 
     @GET("api_token.php?command=request")
     fun generateToken(): Single<TokenGenerateResponse>

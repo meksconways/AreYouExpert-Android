@@ -7,11 +7,13 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
+import com.meksconway.areyouexpert.domain.usecase.CategoryModel
 import com.meksconway.areyouexpert.domain.usecase.CategoryOnBoardItem
 import com.meksconway.areyouexpert.extension.viewextension.gone
 import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.adapter.CategoryOnBoardAdapter
 import com.meksconway.areyouexpert.ui.fragment.quiz.QuizFragment
+import com.meksconway.areyouexpert.ui.fragment.quiz.QuizViewModel
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status.*
 import com.meksconway.areyouexpert.util.ToolbarConfigration
@@ -40,13 +42,15 @@ class CategoryOnBoardFragment :
         return ToolbarConfigration("", false)
     }
 
+    private lateinit var _category: CategoryModel
+
     override fun viewDidLoad() {
         super.viewDidLoad()
         rvCategoryOnBoard.layoutManager = LinearLayoutManager(context)
         rvCategoryOnBoard.adapter = adapter
         rvCategoryOnBoard.setItemViewCacheSize(8)
         btnStart.setOnClickListener {
-            navigator?.start(QuizFragment())
+            navigator?.start(QuizFragment.newInstance(_category))
         }
     }
 
@@ -54,6 +58,10 @@ class CategoryOnBoardFragment :
         output?.contentOutput?.observe(viewLifecycleOwner, Observer {
             Toast.makeText(context, it.status.toString(), Toast.LENGTH_SHORT).show()
             checkOutput(it)
+        })
+
+        output?.categoryOutput?.observe(viewLifecycleOwner, Observer {
+            _category = it
         })
 
         output?.buttonColorOutput?.observe(viewLifecycleOwner, Observer {
@@ -64,17 +72,14 @@ class CategoryOnBoardFragment :
     private fun checkOutput(resource: Res<List<CategoryOnBoardItem>>) {
         when (resource.status) {
             SUCCESS -> {
-                progressBar.gone()
-                rvCategoryOnBoard.visible()
+                hideLoading()
                 setAdapter(resource.data)
             }
             LOADING -> {
-                progressBar.visible()
-                rvCategoryOnBoard.gone()
+                showLoading()
             }
             ERROR -> {
-                progressBar.gone()
-                rvCategoryOnBoard.gone()
+                hideLoading()
             }
         }
     }

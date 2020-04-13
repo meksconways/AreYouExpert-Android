@@ -22,6 +22,10 @@ class RoomLocalDataSourceImpl
         daoService.insertQuizList(quizCategory)
     }
 
+    override fun updateQuiz(categoryId: Int) {
+        daoService.increateQuizProgress(categoryId)
+    }
+
     override fun deleteQuizList() {
         daoService.deleteQuizList()
     }

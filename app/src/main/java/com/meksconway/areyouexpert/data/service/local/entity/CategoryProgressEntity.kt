@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "categoryprogress_entity")
 data class CategoryProgressEntity(
     @PrimaryKey(autoGenerate = true)
-    val categoryProgressId: Int,
+    val categoryProgressId: Int = 0,
     val categoryName: String,
     val progress: Int
 )

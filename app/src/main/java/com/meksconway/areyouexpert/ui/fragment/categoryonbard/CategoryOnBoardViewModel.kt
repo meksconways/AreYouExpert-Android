@@ -22,6 +22,7 @@ interface CategoryOnBoardInput : Input {
 interface CategoryOnBoardOutput : Output {
     val contentOutput: LiveData<Res<List<CategoryOnBoardItem>>>
     val buttonColorOutput: LiveData<Int>
+    val categoryOutput: LiveData<CategoryModel>
 }
 
 class CategoryOnBoardViewModel @Inject constructor(
@@ -36,6 +37,7 @@ class CategoryOnBoardViewModel @Inject constructor(
 
 
     override fun getContent(category: CategoryModel) {
+        _categoryOutput.value = category
         useCase.getContent(category)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
@@ -56,6 +58,10 @@ class CategoryOnBoardViewModel @Inject constructor(
     private val _buttonColorOutput = MutableLiveData<Int>()
     override val buttonColorOutput: LiveData<Int>
         get() = _buttonColorOutput
+
+    private val _categoryOutput = MutableLiveData<CategoryModel>()
+    override val categoryOutput: LiveData<CategoryModel>
+        get() = _categoryOutput
 
 
 }

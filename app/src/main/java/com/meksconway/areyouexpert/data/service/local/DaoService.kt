@@ -16,6 +16,9 @@ interface DaoService {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertQuiz(quizCategory: QuizCategoryEntity)
 
+    @Query("UPDATE quiz_category SET progress= progress + 1 WHERE Id = :categoryId")
+    fun increateQuizProgress(categoryId: Int)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertQuizList(quizCategory: List<QuizCategoryEntity>)
 
@@ -40,7 +43,6 @@ interface DaoService {
     //todo tekrar bakılacak test edildikten sonra
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCategoryProgress(progressEntity: CategoryProgressEntity)
-
 
 
 

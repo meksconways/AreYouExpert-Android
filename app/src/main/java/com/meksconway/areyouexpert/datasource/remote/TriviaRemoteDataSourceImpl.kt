@@ -16,12 +16,12 @@ constructor(private val triviaApiService: TriviaApiService) :
 
     override fun getQuestions(
         amount: String?,
-        category: String?,
+        categoryId: Int,
         difficulty: String?,
         type: String?,
         token: String?
     ): Observable<QuestionsResponse> {
-        return triviaApiService.getQuestions(amount, category, difficulty, type, token)
+        return triviaApiService.getQuestions(categoryId)
             .toObservable()
     }
 

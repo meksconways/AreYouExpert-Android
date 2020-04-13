@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.meksconway.areyouexpert.ui.activity.main.MainAcitivityViewModel
 import com.meksconway.areyouexpert.ui.activity.main.MainActivity
+import com.meksconway.areyouexpert.ui.dialog.LoadingView
 import com.meksconway.areyouexpert.util.ToolbarConfigration
 import com.meksconway.areyouexpert.viewmodel.BaseViewModel
 import com.meksconway.areyouexpert.viewmodel.Input
@@ -29,8 +30,20 @@ abstract class BaseFragment<I : Input, O : Output, VM : BaseViewModel<I, O>> : D
         factory
     }
 
+    private var loading: LoadingView? = null
+
     companion object {
         var canBack: Boolean = false
+    }
+
+    fun showLoading() {
+        if (loading?.isShowing == false){
+            loading?.show()
+        }
+    }
+
+    fun hideLoading() {
+        loading?.dismiss()
     }
 
     abstract fun setToolbarConfig(): ToolbarConfigration
@@ -57,6 +70,8 @@ abstract class BaseFragment<I : Input, O : Output, VM : BaseViewModel<I, O>> : D
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        loading = LoadingView(requireContext())
+        loading?.setCancelable(false)
         initStackNavigator(context)
         setHasOptionsMenu(true)
         mainVM.input.setToolbarConfig(setToolbarConfig())

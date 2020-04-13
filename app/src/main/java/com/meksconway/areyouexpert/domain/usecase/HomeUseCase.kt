@@ -1,5 +1,6 @@
 package com.meksconway.areyouexpert.domain.usecase
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.common.Decider
@@ -12,6 +13,7 @@ import com.meksconway.areyouexpert.util.Res
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.parcel.Parcelize
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -143,14 +145,14 @@ data class TitleModel(val title: String) : HomeItemType {
 }
 //***************** TITLE **********************************
 
-
+@Parcelize
 data class CategoryModel(
     val id: Int,
     val progress: Int,
     val name: String,
     val resources: QuizCategoryResources
 
-) : HomeItemType {
+): Parcelable, HomeItemType {
 
     fun getProgressPercent(): String = "Achievement: ${progress * 10}%"
 

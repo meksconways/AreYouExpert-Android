@@ -72,31 +72,22 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
         when (resource.status) {
             Status.SUCCESS -> {
                 // set Adapter
-                hideProgress()
+                hideLoading()
                 setAdapter(resource.data)
             }
 
             Status.ERROR -> {
                 //show errors
-                hideProgress()
+                hideLoading()
             }
 
             Status.LOADING -> {
                 //show progress
-                showProgress()
+                showLoading()
             }
         }
     }
 
-    private fun hideProgress() {
-        progressBar.gone()
-        rvHome.visible()
-    }
-
-    private fun showProgress() {
-        progressBar.visible()
-        rvHome.gone()
-    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         return inflater.inflate(R.menu.menu_home_fragment, menu)

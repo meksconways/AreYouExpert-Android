@@ -8,6 +8,7 @@ import com.meksconway.areyouexpert.ui.adapter.SettingsAdapter
 import com.meksconway.areyouexpert.ui.fragment.categoryonbard.CategoryOnBoardViewModel
 import com.meksconway.areyouexpert.ui.fragment.home.HomeViewModel
 import com.meksconway.areyouexpert.ui.fragment.notification.NotificationViewModel
+import com.meksconway.areyouexpert.ui.fragment.quiz.QuizViewModel
 import com.meksconway.areyouexpert.ui.fragment.settings.SettingsViewModel
 import dagger.Binds
 import dagger.Module
@@ -40,6 +41,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CategoryOnBoardViewModel::class)
     abstract fun bindCategoryOnBoardViewModel(vm: CategoryOnBoardViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(QuizViewModel::class)
+    abstract fun bindQuizViewModel(vm: QuizViewModel): ViewModel
 
 
 

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtQuizDialogTitle"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="44sp"
+            android:text="Time is Up!"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/courgette_regular"
+            />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="42dp"
+            android:layout_marginEnd="42dp"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/dialogQuizAnimatedView"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="false"
+            app:lottie_rawRes="@raw/time_is_up_anim" />
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="@android:color/transparent">-->
+
+<!--            -->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:insetRight="0dp"
+            app:backgroundTint="@color/appToolbarBackground"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/whiteTrans"
+            android:id="@+id/btnDialogQuiz"
+            android:insetLeft="0dp"
+            android:insetBottom="0dp"
+            android:insetTop="0dp"
+            app:cornerRadius="8dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:text="OK"
+            />
+
+    </FrameLayout>
+
+
+</androidx.cardview.widget.CardView>

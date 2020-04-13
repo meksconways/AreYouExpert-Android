@@ -10,6 +10,7 @@
     <color name="appToolbarBackground">#505050</color>
     <color name="appToolbarBackgroundTransparent">#80505050</color>
     <color name="white">#ffffff</color>
+    <color name="whiteTrans">#50ffffff</color>
     <color name="black">#000</color>
 
     <color name="catGeneralPrimaryColor">#ff1744</color>
