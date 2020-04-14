@@ -30,9 +30,9 @@ class QuizFinishDialog(
         window?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#d0000000")))
         setContentView(R.layout.dialog_quiz_finish_state)
 
-        btnDialogQuiz.setOnClickListener {
+        btnDialogQuizTryAgain.setOnClickListener {
             this.dismiss()
-            callback.invoke(state)
+            callback.invoke(QuizFinishState.BUTTON_TRY_AGAIN)
         }
 
         when (state) {
@@ -46,12 +46,18 @@ class QuizFinishDialog(
             }
             QuizFinishState.SUCCESS -> {
                 txtQuizDialogTitle?.text = "Congratulations!"
-                btnDialogQuiz.backgroundTintList = ContextCompat.getColorStateList(
+                btnDialogQuizTryAgain.backgroundTintList = ContextCompat.getColorStateList(
                     context,
                     R.color.catScienceAndNatureDarkColor
                 )
                 dialogQuizAnimatedView.setAnimation(R.raw.anim_suc)
+
             }
+        }
+        btnDialogQuizBackMenu.setOnClickListener {
+            this.dismiss()
+            callback.invoke(QuizFinishState.BUTTON_BACK_TO_MENU)
+
         }
 
 
