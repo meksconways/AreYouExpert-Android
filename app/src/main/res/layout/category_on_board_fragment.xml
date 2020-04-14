@@ -10,7 +10,8 @@
         android:id="@+id/rvCategoryOnBoard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="54dp"
+        android:paddingBottom="64dp"
+        tools:listitem="@layout/item_category_onboard_progress"
         android:clipToPadding="false"
         />
 
@@ -23,7 +24,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:id="@+id/btnStart"
         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
         app:backgroundTint="@color/colorPrimary"

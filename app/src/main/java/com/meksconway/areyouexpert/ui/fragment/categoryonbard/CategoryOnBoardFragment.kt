@@ -66,7 +66,6 @@ class CategoryOnBoardFragment :
 
     override fun observeViewModel(output: CategoryOnBoardOutput?) {
         output?.contentOutput?.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context, it.status.toString(), Toast.LENGTH_SHORT).show()
             checkOutput(it)
         })
 
