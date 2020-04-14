@@ -35,6 +35,11 @@ class QuizFinishDialog(
             callback.invoke(QuizFinishState.BUTTON_TRY_AGAIN)
         }
 
+        btnDialogQuizBackMenu.setOnClickListener {
+            this.dismiss()
+            callback.invoke(QuizFinishState.BUTTON_BACK_TO_MENU)
+        }
+
         when (state) {
             QuizFinishState.WRONG_ANSWER -> {
                 dialogQuizAnimatedView.setAnimation(R.raw.quiz_failed)
@@ -54,11 +59,7 @@ class QuizFinishDialog(
 
             }
         }
-        btnDialogQuizBackMenu.setOnClickListener {
-            this.dismiss()
-            callback.invoke(QuizFinishState.BUTTON_BACK_TO_MENU)
 
-        }
 
 
     }

@@ -69,8 +69,8 @@ class QuizFragment : BaseFragment<QuizInput, QuizOutput, QuizViewModel>(),
         initListener()
         requireActivity()
             .onBackPressedDispatcher.addCallback(this) {
-                showPopUp(QuizFinishState.SUCCESS)
-            }
+            showPopUp(QuizFinishState.SUCCESS)
+        }
 
     }
 
@@ -88,6 +88,29 @@ class QuizFragment : BaseFragment<QuizInput, QuizOutput, QuizViewModel>(),
     private var category: CategoryModel? = null
 
     override fun observeViewModel(output: QuizOutput?) {
+
+        output?.tryAgainOutput?.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+
+                SUCCESS -> {
+                    category?.let { catModel ->
+                        viewModel.clearQuiz()
+                        adapter.enableAllItems()
+                        viewModel.input.setCategory(catModel)
+                    }
+                }
+
+                LOADING -> {
+                    showLoading()
+                }
+
+                ERROR -> {
+                    hideLoading()
+                    Toast.makeText(context, it.error?.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        })
 
         output?.backToMenuOutput?.observe(viewLifecycleOwner, Observer {
             when (it.status) {
@@ -150,6 +173,7 @@ class QuizFragment : BaseFragment<QuizInput, QuizOutput, QuizViewModel>(),
         })
 
         output?.nextQuestionOutput?.observe(viewLifecycleOwner, Observer {
+            it ?: return@Observer
             setAdapter(it.answers)
             quizTimerView.startTimer()
             val questionText = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -172,7 +196,7 @@ class QuizFragment : BaseFragment<QuizInput, QuizOutput, QuizViewModel>(),
     private fun showPopUp(state: QuizFinishState) {
         QuizFinishDialog(requireContext(), state) {
             //route to quiz result page
-            viewModel.input.updateDb()
+            viewModel.input.updateDb(it)
         }.apply {
             setCancelable(false)
             show()

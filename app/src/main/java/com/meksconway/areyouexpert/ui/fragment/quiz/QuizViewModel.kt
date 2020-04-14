@@ -42,7 +42,7 @@ class QuizViewModel @Inject constructor(
         get() = this
 
     private var _page: Int = 0
-    private val _questionList = arrayListOf<QuestionsResponseResults>()
+    private var _questionList = arrayListOf<QuestionsResponseResults>()
     private var _categoryModel: CategoryModel? = null
 
 
@@ -98,6 +98,15 @@ class QuizViewModel @Inject constructor(
         } else {
             _finishState.value = QuizFinishState.WRONG_ANSWER
         }
+
+    }
+
+    fun clearQuiz() {
+        _page = 0
+        _questionList = arrayListOf()
+        _categoryModel = null
+        _questionsOutput.value = Res.loading()
+        _nextQuestionOutput.value = null
 
     }
 
