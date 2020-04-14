@@ -1,9 +1,14 @@
 package com.meksconway.areyouexpert.ui.fragment.categoryonbard
 
+import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelStore
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
@@ -27,7 +32,7 @@ class CategoryOnBoardFragment :
         fun newInstance() = CategoryOnBoardFragment()
     }
 
-    override val viewModel: CategoryOnBoardViewModel by activityViewModels {
+    override val viewModel: CategoryOnBoardViewModel by activityViewModels() {
         factory
     }
 
@@ -46,6 +51,11 @@ class CategoryOnBoardFragment :
 
     override fun viewDidLoad() {
         super.viewDidLoad()
+        arguments?.let {
+            it.getParcelable<CategoryModel>("category")?.let {categoryModel ->
+                //viewModel.input.getContent(categoryModel)
+            }
+        }
         rvCategoryOnBoard.layoutManager = LinearLayoutManager(context)
         rvCategoryOnBoard.adapter = adapter
         rvCategoryOnBoard.setItemViewCacheSize(8)
