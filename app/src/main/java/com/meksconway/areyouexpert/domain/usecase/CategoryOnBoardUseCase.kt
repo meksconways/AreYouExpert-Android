@@ -69,6 +69,7 @@ data class CategoryProgressModel(
 ) : CategoryOnBoardItem {
     override fun getItemType() = CategoryOnBoardItemType.PROGRESS
     override fun getId() = progressId
+    fun getPercent() = "Achievement: ${progress * 10}%"
 }
 
 enum class CategoryOnBoardItemType {

@@ -70,7 +70,7 @@ class QuizViewModel @Inject constructor(
 
     override fun updateDb() {
         _categoryModel?.let {
-            useCase.updateCategoryProgressAndQuizCategoryProgress(_page + 1, it)
+            useCase.updateCategoryProgressAndQuizCategoryProgress(_page, it)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { result ->
                     _categoryProgressOutput.value = result

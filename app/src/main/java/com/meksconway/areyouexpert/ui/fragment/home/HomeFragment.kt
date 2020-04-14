@@ -99,9 +99,6 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
                 navigator?.start(SettingsFragment().apply { canBack = true })
                 true
             }
-            R.id.profile -> {
-                false
-            }
             R.id.notification -> {
                 navigator?.start(NotificationFragment().apply { canBack = true })
                 true
