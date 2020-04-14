@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.domain.usecase.*
+import com.meksconway.areyouexpert.ui.view.CategoryView
 
 class HomeContentAdapter
 constructor(private val callback: ((HomeItemType) -> Unit)? = null) :
@@ -139,24 +140,13 @@ constructor(private val callback: ((HomeItemType) -> Unit)? = null) :
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        lateinit var model: CategoryModel
-        private val titleText = itemView.findViewById<TextView>(R.id.txtCatTitle)
-        private val catImage = itemView.findViewById<ImageView>(R.id.imgCategory)
-        private val catBackground = itemView.findViewById<ImageView>(R.id.imgCategoryBackground)
+        private val categoryView = itemView.findViewById<CategoryView>(R.id.catView)
 
         fun bind(model: CategoryModel) {
-            Log.d("***categoryVH", model.toString())
-            this.model = model
-            catImage.setColorFilter(
-                ContextCompat.getColor(itemView.context, model.resources.darkColor),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            catBackground.setColorFilter(
-                ContextCompat.getColor(itemView.context, model.resources.lightColor),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            catImage.setImageResource(model.resources.drawableRes)
-            titleText?.text = model.name
+            categoryView.setTitle(model.name)
+            categoryView.setImage(model.resources.drawableRes)
+            categoryView.setGradient(model.resources.lightColor, model.resources.darkColor)
+            categoryView.setImageTint(model.resources.darkColor)
         }
 
     }

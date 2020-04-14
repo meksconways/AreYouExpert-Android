@@ -6,5 +6,12 @@
         <attr name="timer" format="integer"/>
     </declare-styleable>
 
+    <declare-styleable name="CategoryView">
+        <attr name="_cornerRadius" format="float"/>
+        <attr name="_startColor" format="color"/>
+        <attr name="_endColor" format="color"/>
+        <attr name="_icon" format="integer"/>
+        <attr name="_title" format="string"/>
+    </declare-styleable>
 
 </resources>
