@@ -1,10 +1,11 @@
 package com.meksconway.areyouexpert.util
 
-import com.meksconway.areyouexpert.enums.Resource
+import android.content.res.Resources
+import android.util.DisplayMetrics
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.schedulers.Schedulers
-import retrofit2.HttpException
+
 
 //Transformers
 fun <T> Observable<T>.remote(): Observable<Res<T>> =
@@ -96,7 +97,14 @@ object RetrofitErrorHandlerFactory {
     }
 }
 
+val Float.dp: Float
+    get() = (this / Resources.getSystem().displayMetrics.density)
+val Float.px: Float
+    get() = (this * Resources.getSystem().displayMetrics.density)
 
+fun convertPixelsToDp(px: Float): Float {
+    return px / (Resources.getSystem().displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
+}
 //sealed class Resource<T>(
 //    val data: T? = null,
 //    val message: String? = null

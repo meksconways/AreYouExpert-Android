@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
 import com.meksconway.areyouexpert.domain.usecase.CategoryModel
@@ -63,7 +64,8 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
         super.viewDidLoad()
         rvHome?.setItemViewCacheSize(30)
         rvHome?.setHasFixedSize(true)
-        rvHome?.layoutManager = GridLayoutManager(context, 2)
+        rvHome?.layoutManager = LinearLayoutManager(context)
+//        rvHome?.layoutManager = GridLayoutManager(context, 2)
         rvHome?.adapter = adapter
     }
 
@@ -109,17 +111,17 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
 
     private fun setAdapter(listItems: HomeContentModel?) {
         listItems?.content?.let { list ->
-            (rvHome.layoutManager as? GridLayoutManager)?.apply {
-                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return when (list[position].getItemType()) {
-                            BANNER -> 2
-                            CATEGORY -> 1
-                            TITLE -> 2
-                        }
-                    }
-                }
-            }
+//            (rvHome.layoutManager as? GridLayoutManager)?.apply {
+//                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+//                    override fun getSpanSize(position: Int): Int {
+//                        return when (list[position].getItemType()) {
+//                            BANNER -> 2
+//                            CATEGORY -> 1
+//                            TITLE -> 2
+//                        }
+//                    }
+//                }
+//            }
             adapter.setItems(list)
         }
 

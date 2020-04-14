@@ -107,6 +107,7 @@ dependencies {
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
     implementation 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+    compile 'com.narayanacharya:WaveView:0.9.4'
 
     //medusa
     implementation "com.github.trendyol:medusa:$medusa_version"
