@@ -64,6 +64,7 @@ class MainActivity : DaggerAppCompatActivity(), Navigator.NavigatorListener {
             supportActionBar?.setHomeButtonEnabled(it.canBack)
             supportActionBar?.setDisplayHomeAsUpEnabled(it.canBack)
             if (it.canBack) toolbar.setNavigationIcon(R.drawable.ic_back)
+            supportActionBar?.title = it.title
 
         })
     }

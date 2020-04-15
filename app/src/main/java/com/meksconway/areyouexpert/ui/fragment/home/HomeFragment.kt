@@ -62,7 +62,8 @@ class HomeFragment : BaseFragment<HomeViewModelInput, HomeViewModelOutput, HomeV
 
     override fun viewDidLoad() {
         super.viewDidLoad()
-        rvHome?.setItemViewCacheSize(30)
+//        viewModel.input.getHomeContent()
+        rvHome?.setItemViewCacheSize(24)
         rvHome?.setHasFixedSize(true)
         rvHome?.layoutManager = LinearLayoutManager(context)
 //        rvHome?.layoutManager = GridLayoutManager(context, 2)

@@ -80,8 +80,11 @@ class SettingsFragment :
                 Status.SUCCESS -> {
                     progressBar.gone()
                     rvSettings.visible()
-                    startActivity(Intent(context, SplashActivity::class.java))
-                    activity?.finish()
+                    activity?.also { act ->
+                        startActivity(Intent(act, SplashActivity::class.java))
+                        act.finish()
+                    }
+
                 }
                 Status.LOADING -> {
                     progressBar.visible()

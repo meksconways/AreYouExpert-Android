@@ -24,6 +24,7 @@ class HomeUseCase
     private var homeContent = HomeContentModel(content = arrayListOf())
 
     fun getHomeContent(): Observable<Res<HomeContentModel>> {
+        homeContent.content.clear()
         return Observable.create<Res<HomeContentModel>> { emitter ->
             emitter.onNext(Res.loading())
             homeContent.content.add(
@@ -37,8 +38,9 @@ class HomeUseCase
                 .map {
                     if (it.isNullOrEmpty()) {
                         repository.getRemoteCategories()
+                            .subscribeOn(Schedulers.io())
                             .subscribe { cat ->
-                                cat.data?.let { quiz ->
+                                cat?.let { quiz ->
                                     Completable.fromAction {
                                         repository.insertCategoryList(quiz.mapToEntity())
                                     }.subscribeOn(Schedulers.io())
@@ -47,7 +49,7 @@ class HomeUseCase
                                             emitter.onNext(Res.success(homeContent))
                                         }
                                 } ?: kotlin.run {
-                                    emitter.onNext(Res.error(cat.error ?: Throwable("asd")))
+                                    emitter.onNext(Res.error(Throwable("asd")))
                                 }
 
                             }

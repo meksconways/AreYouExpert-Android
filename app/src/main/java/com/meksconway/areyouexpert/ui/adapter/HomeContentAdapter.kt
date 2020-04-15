@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -89,7 +90,7 @@ constructor(private val callback: ((HomeItemType) -> Unit)? = null) :
 
     fun setItems(listItems: List<HomeItemType>?) {
         contentData.clear()
-        if (listItems != null) {
+        if (!listItems.isNullOrEmpty()) {
 //            val diffCallback = HomeContentAdapterDiffUtil(contentData, listItems)
 //            val diffResult = DiffUtil.calculateDiff(diffCallback)
             contentData.addAll(listItems)

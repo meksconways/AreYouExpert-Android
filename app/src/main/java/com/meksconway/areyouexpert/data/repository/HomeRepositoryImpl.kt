@@ -19,11 +19,11 @@ class HomeRepositoryImpl
 ) : HomeRepository {
 
 
-    override fun getRemoteCategories(): Observable<Res<List<QuizCategories>>> {
+    override fun getRemoteCategories(): Observable<List<QuizCategories>> {
         return remoteDataSource.getCategories()
             .map {
                 it.categories
-            }.remote()
+            }
     }
 
     override fun getLocalCategories(): Observable<List<QuizCategoryEntity>> {

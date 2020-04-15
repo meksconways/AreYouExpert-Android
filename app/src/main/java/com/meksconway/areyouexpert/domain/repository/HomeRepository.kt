@@ -8,7 +8,7 @@ import io.reactivex.Observable
 
 interface HomeRepository {
 
-    fun getRemoteCategories(): Observable<Res<List<QuizCategories>>>
+    fun getRemoteCategories(): Observable<List<QuizCategories>>
     fun getLocalCategories(): Observable<List<QuizCategoryEntity>>
     fun insertCategory(categoryEntity: QuizCategoryEntity)
     fun insertCategoryList(categoryEntity: List<QuizCategoryEntity>)
