@@ -5,13 +5,15 @@
     android:layout_height="wrap_content"
     android:measureAllChildren="true"
     app:cardBackgroundColor="@null"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/whiteTrans"
     app:cardCornerRadius="8dp"
     app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/appToolbarBackground"
         android:orientation="vertical">
 
         <TextView
@@ -19,11 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="10dp"
+            android:padding="16dp"
+            android:background="@color/whiteTrans"
             android:text="@string/warning"
             android:textAlignment="center"
-            android:textSize="20sp"
-            android:fontFamily="@font/opensans_regular"
+            android:textSize="17sp"
+            android:fontFamily="@font/opensans_semi_bold"
             android:textColor="@color/catArtDarkColor"
             />
 
@@ -31,30 +34,31 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/catArtDarkColor" />
+            android:background="@color/whiteTrans" />
 
         <TextView
             android:id="@+id/txtDropDb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="16dp"
             android:text="@string/drop_database"
             android:textAlignment="center"
             android:fontFamily="@font/opensans_regular"
-            android:textColor="@color/greyTextColor"
+            android:textColor="@color/white"
             android:textSize="16sp"/>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:layout_weight="2">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnYes"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/yes"
@@ -67,10 +71,10 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnNo"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorAccent"
+                android:backgroundTint="@color/whiteTrans"
                 android:text="@string/no"
                 app:cornerRadius="0dp"
                 android:insetLeft="0dp"

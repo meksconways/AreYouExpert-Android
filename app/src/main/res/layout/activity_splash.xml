@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.splash.SplashActivity">
 
-    <TextView
-        android:layout_width="match_parent"
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/lakkireddy_regular"
-        android:textSize="42sp"
-        android:text="Are You Expert"
-        android:gravity="center"
+        android:id="@+id/animView"
         android:layout_gravity="center"
+        app:lottie_rawRes="@raw/anim_logo"
+        android:layout_margin="64dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
         />
 
 </FrameLayout>

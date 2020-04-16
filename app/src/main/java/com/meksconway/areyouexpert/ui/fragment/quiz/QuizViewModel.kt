@@ -21,14 +21,15 @@ interface QuizInput : Input {
     fun getNextQuestion(answer: Answer)
     fun getFirstQuestion(list: List<QuestionsResponseResults>)
     fun setTimeisUp()
-    fun updateDb()
+    fun updateDb(state: QuizFinishState)
 }
 
 interface QuizOutput : Output {
     val questionsDataOutput: LiveData<Res<List<QuestionsResponseResults>>>
     val nextQuestionOutput: LiveData<QuestionsResponseResults>
     val finishState: LiveData<QuizFinishState>
-    val categoryProgressOutput: LiveData<Res<Boolean>>
+    val backToMenuOutput: LiveData<Res<Boolean>>
+    val tryAgainOutput: LiveData<Res<Boolean>>
 }
 
 class QuizViewModel @Inject constructor(
@@ -41,7 +42,7 @@ class QuizViewModel @Inject constructor(
         get() = this
 
     private var _page: Int = 0
-    private val _questionList = arrayListOf<QuestionsResponseResults>()
+    private var _questionList = arrayListOf<QuestionsResponseResults>()
     private var _categoryModel: CategoryModel? = null
 
 
@@ -68,12 +69,19 @@ class QuizViewModel @Inject constructor(
         _finishState.value = QuizFinishState.TIME_IS_UP
     }
 
-    override fun updateDb() {
+    override fun updateDb(state: QuizFinishState) {
         _categoryModel?.let {
-            useCase.updateCategoryProgressAndQuizCategoryProgress(_page + 1, it)
+            useCase.updateCategoryProgressAndQuizCategoryProgress(_page, it)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { result ->
-                    _categoryProgressOutput.value = result
+                    when (state) {
+                        QuizFinishState.BUTTON_BACK_TO_MENU -> {
+                            _backToMenuOutput.value = result
+                        }
+                        QuizFinishState.BUTTON_TRY_AGAIN -> {
+                            _tryAgainOutput.value = result
+                        }
+                    }
                 }
                 .addTo(compositeDisposable)
         }
@@ -93,6 +101,15 @@ class QuizViewModel @Inject constructor(
 
     }
 
+    fun clearQuiz() {
+        _page = 0
+        _questionList = arrayListOf()
+        _categoryModel = null
+        _questionsOutput.value = Res.loading()
+        _nextQuestionOutput.value = null
+
+    }
+
     private val _questionsOutput = MutableLiveData<Res<List<QuestionsResponseResults>>>()
     override val questionsDataOutput: LiveData<Res<List<QuestionsResponseResults>>>
         get() = _questionsOutput
@@ -105,15 +122,20 @@ class QuizViewModel @Inject constructor(
     override val finishState: LiveData<QuizFinishState>
         get() = _finishState
 
-    private val _categoryProgressOutput = MutableLiveData<Res<Boolean>>()
-    override val categoryProgressOutput: LiveData<Res<Boolean>>
-        get() = _categoryProgressOutput
+    private val _backToMenuOutput = MutableLiveData<Res<Boolean>>()
+    override val backToMenuOutput: LiveData<Res<Boolean>>
+        get() = _backToMenuOutput
 
+    private val _tryAgainOutput = MutableLiveData<Res<Boolean>>()
+    override val tryAgainOutput: LiveData<Res<Boolean>>
+        get() = _tryAgainOutput
 
 }
 
 enum class QuizFinishState {
     SUCCESS,
     TIME_IS_UP,
-    WRONG_ANSWER
+    WRONG_ANSWER,
+    BUTTON_BACK_TO_MENU,
+    BUTTON_TRY_AGAIN
 }

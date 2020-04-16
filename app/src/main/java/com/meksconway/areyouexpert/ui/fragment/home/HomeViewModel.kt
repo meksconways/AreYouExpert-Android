@@ -1,5 +1,6 @@
 package com.meksconway.areyouexpert.ui.fragment.home
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.meksconway.areyouexpert.domain.usecase.HomeContentModel
 import com.meksconway.areyouexpert.domain.usecase.HomeUseCase
@@ -45,10 +46,15 @@ class HomeViewModel
     override fun getHomeContent() {
         useCase.getHomeContent()
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnNext {
-                homeContentOutput.value = it
-            }
-            .subscribe()
+            .subscribe(
+                {
+                    Log.d("***value",it.toString())
+                    homeContentOutput.value = it
+                },
+                {
+                    homeContentOutput.value = Res.error(it)
+                }
+            )
             .addTo(compositeDisposable)
     }
 

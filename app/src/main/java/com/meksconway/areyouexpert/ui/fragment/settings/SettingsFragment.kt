@@ -1,10 +1,7 @@
 package com.meksconway.areyouexpert.ui.fragment.settings
 
-import android.content.ContentValues.TAG
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -18,8 +15,9 @@ import com.meksconway.areyouexpert.extension.viewextension.gone
 import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.activity.splash.SplashActivity
 import com.meksconway.areyouexpert.ui.adapter.SettingsAdapter
+import com.meksconway.areyouexpert.ui.dialog.ClearTaskDialog
 import com.meksconway.areyouexpert.ui.fragment.makesuggestion.MakeSuggestionFragment
-import com.meksconway.areyouexpert.ui.view.ResetProgressDialog
+import com.meksconway.areyouexpert.ui.dialog.ResetProgressDialog
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status
 import com.meksconway.areyouexpert.util.ToolbarConfigration
@@ -51,12 +49,13 @@ class SettingsFragment :
 
     private fun showResetProgressDialog() {
         ResetProgressDialog(requireContext()) {
-            if (it) viewModel.input.resetProgress()
+            if (it) {
+                viewModel.input.resetProgress()
+                showTaskCleanDialog()
+            }
         }.show()
 
     }
-
-    private val layoutManager = LinearLayoutManager(context)
 
     override val viewModel: SettingsViewModel by viewModels {
         factory
@@ -68,7 +67,23 @@ class SettingsFragment :
 
     override fun viewDidLoad() {
         super.viewDidLoad()
+        rvSettings?.adapter = adapter
+        rvSettings?.layoutManager = LinearLayoutManager(context)
+        rvSettings?.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                LinearLayoutManager.VERTICAL
+            ))
+    }
 
+    private fun showTaskCleanDialog(){
+        ClearTaskDialog(requireContext()) {
+            activity?.also { act ->
+                startActivity(Intent(act, SplashActivity::class.java))
+                act.finish()
+            }
+
+        }.show()
     }
 
     override fun observeViewModel(output: SettingsViewModelOutput?) {
@@ -78,19 +93,16 @@ class SettingsFragment :
         output?.resetProgressOutput?.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    progressBar.gone()
-                    rvSettings.visible()
-                    startActivity(Intent(context, SplashActivity::class.java))
-                    activity?.finish()
+//                    activity?.also { act ->
+//                        startActivity(Intent(act, SplashActivity::class.java))
+//                        act.finish()
+//                    }
                 }
                 Status.LOADING -> {
-                    progressBar.visible()
-                    rvSettings.gone()
+//                    rvSettings.gone()
                 }
 
                 Status.ERROR -> {
-                    progressBar.gone()
-                    rvSettings.visible()
                     Toast.makeText(context, it.error?.localizedMessage, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -106,8 +118,7 @@ class SettingsFragment :
     private fun setAdapter(list: List<SettingsModel>?) {
         rvSettings?.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         list?.let {
-            rvSettings?.adapter = adapter
-            rvSettings?.layoutManager = LinearLayoutManager(context)
+
             adapter.setItems(it)
         }
 
@@ -115,9 +126,10 @@ class SettingsFragment :
 
     private fun showVoteDialog() {
         val ratingDialog = RatingDialog.Builder(context)
-            .threshold(3f)
+            .threshold(1f)
             .ratingBarColor(R.color.colorPrimary)
-            .playstoreUrl("https://github.com/codemybrainsout/smart-app-rate")
+            .playstoreUrl("https://play.google.com/store/apps/details?" +
+                    "id=com.meksconway.areyouexpert")
             .build()
         ratingDialog.show()
     }

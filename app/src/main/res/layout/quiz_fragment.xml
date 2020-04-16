@@ -62,7 +62,7 @@
                             android:maxHeight="200dp"
                             android:fontFamily="@font/opensans_bold"
                             android:textColor="@color/white"
-                            android:textSize="22sp"
+                            android:textSize="18sp"
                             android:text="@string/please_check_your_internet_connection"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

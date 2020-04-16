@@ -1,6 +1,5 @@
 package com.meksconway.areyouexpert.ui.fragment.categoryonbard
 
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -9,11 +8,8 @@ import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
 import com.meksconway.areyouexpert.domain.usecase.CategoryModel
 import com.meksconway.areyouexpert.domain.usecase.CategoryOnBoardItem
-import com.meksconway.areyouexpert.extension.viewextension.gone
-import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.adapter.CategoryOnBoardAdapter
 import com.meksconway.areyouexpert.ui.fragment.quiz.QuizFragment
-import com.meksconway.areyouexpert.ui.fragment.quiz.QuizViewModel
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status.*
 import com.meksconway.areyouexpert.util.ToolbarConfigration
@@ -27,7 +23,7 @@ class CategoryOnBoardFragment :
         fun newInstance() = CategoryOnBoardFragment()
     }
 
-    override val viewModel: CategoryOnBoardViewModel by activityViewModels {
+    override val viewModel: CategoryOnBoardViewModel by activityViewModels() {
         factory
     }
 
@@ -46,6 +42,11 @@ class CategoryOnBoardFragment :
 
     override fun viewDidLoad() {
         super.viewDidLoad()
+        arguments?.let {
+            it.getParcelable<CategoryModel>("category")?.let { categoryModel ->
+                //viewModel.input.getContent(categoryModel)
+            }
+        }
         rvCategoryOnBoard.layoutManager = LinearLayoutManager(context)
         rvCategoryOnBoard.adapter = adapter
         rvCategoryOnBoard.setItemViewCacheSize(8)
@@ -56,7 +57,6 @@ class CategoryOnBoardFragment :
 
     override fun observeViewModel(output: CategoryOnBoardOutput?) {
         output?.contentOutput?.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(context, it.status.toString(), Toast.LENGTH_SHORT).show()
             checkOutput(it)
         })
 
@@ -74,6 +74,7 @@ class CategoryOnBoardFragment :
             SUCCESS -> {
                 hideLoading()
                 setAdapter(resource.data)
+
             }
             LOADING -> {
                 showLoading()
@@ -83,6 +84,7 @@ class CategoryOnBoardFragment :
             }
         }
     }
+
 
     private fun setAdapter(data: List<CategoryOnBoardItem>?) {
         adapter.setItems(data)

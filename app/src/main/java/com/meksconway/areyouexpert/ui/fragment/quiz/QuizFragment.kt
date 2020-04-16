@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +19,7 @@ import com.meksconway.areyouexpert.extension.viewextension.gone
 import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.adapter.QuizAdapter
 import com.meksconway.areyouexpert.ui.dialog.QuizFinishDialog
+import com.meksconway.areyouexpert.ui.fragment.categoryonbard.CategoryOnBoardViewModel
 import com.meksconway.areyouexpert.ui.view.QuizTimerView
 import com.meksconway.areyouexpert.util.Status.*
 import com.meksconway.areyouexpert.util.ToolbarConfigration
@@ -56,11 +58,11 @@ class QuizFragment : BaseFragment<QuizInput, QuizOutput, QuizViewModel>(),
         }
     }
 
-
     override fun viewDidLoad() {
         super.viewDidLoad()
         arguments?.getParcelable<CategoryModel>("category")?.let {
             viewModel.input.setCategory(it)
+            category = it
         }
         rvQuiz?.adapter = adapter
         rvQuiz?.layoutManager = LinearLayoutManager(context)
@@ -83,14 +85,46 @@ class QuizFragment : BaseFragment<QuizInput, QuizOutput, QuizViewModel>(),
         super.onDestroyView()
     }
 
+    private var category: CategoryModel? = null
+
     override fun observeViewModel(output: QuizOutput?) {
 
-        output?.categoryProgressOutput?.observe(viewLifecycleOwner, Observer {
+        output?.tryAgainOutput?.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+
+                SUCCESS -> {
+                    category?.let { catModel ->
+                        viewModel.clearQuiz()
+                        adapter.enableAllItems()
+                        viewModel.input.setCategory(catModel)
+                    }
+                }
+
+                LOADING -> {
+                    showLoading()
+                }
+
+                ERROR -> {
+                    hideLoading()
+                    Toast.makeText(context, it.error?.localizedMessage, Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        })
+
+        output?.backToMenuOutput?.observe(viewLifecycleOwner, Observer {
             when (it.status) {
 
                 SUCCESS -> {
                     hideLoading()
-                    navigator?.goBack() //todo değişecek
+                    category?.let { catModel ->
+                        val vm: CategoryOnBoardViewModel by activityViewModels {
+                            factory
+                        }
+                        vm.input.getContent(catModel)
+                        vm.input.setButtonColor(catModel.resources.primaryColor)
+                        navigator?.goBack()
+                    }
                 }
 
                 LOADING -> {
@@ -139,6 +173,7 @@ class QuizFragment : BaseFragment<QuizInput, QuizOutput, QuizViewModel>(),
         })
 
         output?.nextQuestionOutput?.observe(viewLifecycleOwner, Observer {
+            it ?: return@Observer
             setAdapter(it.answers)
             quizTimerView.startTimer()
             val questionText = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -161,7 +196,7 @@ class QuizFragment : BaseFragment<QuizInput, QuizOutput, QuizViewModel>(),
     private fun showPopUp(state: QuizFinishState) {
         QuizFinishDialog(requireContext(), state) {
             //route to quiz result page
-            viewModel.input.updateDb()
+            viewModel.input.updateDb(it)
         }.apply {
             setCancelable(false)
             show()

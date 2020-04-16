@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
-    android:layout_margin="4dp"
+    android:layout_margin="8dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -43,7 +43,9 @@
                 android:gravity="center"
                 android:id="@+id/txtBannerTitle"
                 android:fontFamily="@font/opensans_semi_bold"
-                android:textSize="32sp"
+                android:textSize="26sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:textColor="@android:color/white"
                 android:text="Welcome To App"
                 android:layout_gravity="center"

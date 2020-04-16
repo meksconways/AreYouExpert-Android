@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.domain.usecase.*
+import com.meksconway.areyouexpert.ui.view.CategoryView
 
 class HomeContentAdapter
 constructor(private val callback: ((HomeItemType) -> Unit)? = null) :
@@ -88,7 +90,7 @@ constructor(private val callback: ((HomeItemType) -> Unit)? = null) :
 
     fun setItems(listItems: List<HomeItemType>?) {
         contentData.clear()
-        if (listItems != null) {
+        if (!listItems.isNullOrEmpty()) {
 //            val diffCallback = HomeContentAdapterDiffUtil(contentData, listItems)
 //            val diffResult = DiffUtil.calculateDiff(diffCallback)
             contentData.addAll(listItems)
@@ -139,24 +141,13 @@ constructor(private val callback: ((HomeItemType) -> Unit)? = null) :
 
     class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        lateinit var model: CategoryModel
-        private val titleText = itemView.findViewById<TextView>(R.id.txtCatTitle)
-        private val catImage = itemView.findViewById<ImageView>(R.id.imgCategory)
-        private val catBackground = itemView.findViewById<ImageView>(R.id.imgCategoryBackground)
+        private val categoryView = itemView.findViewById<CategoryView>(R.id.catView)
 
         fun bind(model: CategoryModel) {
-            Log.d("***categoryVH", model.toString())
-            this.model = model
-            catImage.setColorFilter(
-                ContextCompat.getColor(itemView.context, model.resources.darkColor),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            catBackground.setColorFilter(
-                ContextCompat.getColor(itemView.context, model.resources.lightColor),
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
-            catImage.setImageResource(model.resources.drawableRes)
-            titleText?.text = model.name
+            categoryView.setTitle(model.name)
+            categoryView.setImage(model.resources.drawableRes)
+            categoryView.setGradient(model.resources.lightColor, model.resources.darkColor)
+            categoryView.setImageTint(model.resources.darkColor)
         }
 
     }

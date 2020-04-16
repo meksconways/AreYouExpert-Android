@@ -97,7 +97,7 @@ class CategoryOnBoardAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         @SuppressLint("SetTextI18n")
         fun bind(model: CategoryProgressModel) {
             Log.d("***model",model.toString())
-            progressText?.text = model.content.getProgressPercent()
+            progressText?.text = model.getPercent()
             progressView?.post {
                 progressView.max = 10f
                 progressView.progress = model.progress.toFloat()

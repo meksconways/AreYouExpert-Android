@@ -51,6 +51,13 @@ class QuizAdapter constructor(private val callback: (Answer?) -> Unit) :
         notifyDataSetChanged()
     }
 
+    fun enableAllItems() {
+        answersData.map {
+            it.disabled = false
+        }
+        notifyDataSetChanged()
+    }
+
     fun disableAllItems() {
         answersData.map {
             it.disabled = true
@@ -65,9 +72,7 @@ class QuizAdapter constructor(private val callback: (Answer?) -> Unit) :
 
         fun bind(model: Answer) {
 
-            if (model.disabled){
-                itemView.isEnabled = false
-            }
+            itemView.isEnabled = !model.disabled
 
             val question = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(model.answerText, HtmlCompat.FROM_HTML_MODE_LEGACY)

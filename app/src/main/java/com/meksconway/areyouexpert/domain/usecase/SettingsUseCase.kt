@@ -31,13 +31,13 @@ class SettingsUseCase
                 type = SettingsItemType.VOTE
             )
         )
-        arr.add(
-            SettingsModel(
-                settingsId = 2,
-                settingsTitle = "Open Source",
-                type = SettingsItemType.OPEN_SOURCE
-            )
-        )
+//        arr.add(
+//            SettingsModel(
+//                settingsId = 2,
+//                settingsTitle = "Open Source",
+//                type = SettingsItemType.OPEN_SOURCE
+//            )
+//        )
         arr.add(
             SettingsModel(
                 settingsId = 3,
