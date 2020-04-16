@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/appBackground" />
 
-    <item
-        android:drawable="@drawable/cat_general_knowledge"
-        android:height="100dp"
-        android:width="100dp"
-        android:gravity="center"
-        >
-    </item>
+    <item android:drawable="@color/appToolbarBackground" />
+<!--    <item android:drawable="@drawable/ic_pattern__9__1"-->
+<!--    android:gravity="center"-->
+<!--    />-->
+
+<!--    <item-->
+<!--        android:drawable="@drawable/cat_general_knowledge"-->
+<!--        android:height="100dp"-->
+<!--        android:width="100dp"-->
+<!--        android:gravity="center"-->
+<!--        >-->
+<!--    </item>-->
 
 </layer-list>

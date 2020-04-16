@@ -15,6 +15,7 @@ import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import com.bumptech.glide.Glide
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.util.px
 
@@ -58,9 +59,13 @@ class CategoryView(context: Context, attrs: AttributeSet) : ConstraintLayout(con
     }
 
     fun setImage(@DrawableRes resource: Int) {
-        _imageView.setImageResource(resource)
-        invalidate()
-        requestLayout()
+//        _imageView.setImageResource(resource)
+        Glide.with(context)
+            .asBitmap()
+            .load(resource)
+            .into(_imageView)
+//        invalidate()
+//        requestLayout()
     }
 
     fun setTitle(title: String) {

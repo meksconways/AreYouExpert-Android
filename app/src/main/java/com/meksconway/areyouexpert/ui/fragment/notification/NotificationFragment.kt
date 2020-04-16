@@ -49,14 +49,14 @@ class NotificationFragment :
             Status.SUCCESS -> {
                 //set Adapter
                 setAdapter(resource.data)
-                Toast.makeText(context, "veri geldi", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "veri geldi", Toast.LENGTH_SHORT).show()
             }
             Status.ERROR -> {
                 //set errors
                 Toast.makeText(context, resource.error?.localizedMessage, Toast.LENGTH_SHORT).show()
             }
             Status.LOADING -> {
-                Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
             }
         }
     }

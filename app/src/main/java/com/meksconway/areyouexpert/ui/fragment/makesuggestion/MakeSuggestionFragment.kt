@@ -28,9 +28,9 @@ class MakeSuggestionFragment :
     }
 
     override fun observeViewModel(output: MakeSuggestionViewModelOutput?) {
-        output?.suggestionStringOutput?.observe(viewLifecycleOwner, Observer {
-            btnSend.isEnabled = it.isNullOrBlank().not()
-        })
+//        output?.suggestionStringOutput?.observe(viewLifecycleOwner, Observer {
+//            btnSend.isEnabled = it.isNullOrBlank().not()
+//        })
     }
 
     override fun onDestroyView() {
@@ -42,11 +42,11 @@ class MakeSuggestionFragment :
     override fun viewDidLoad() {
         super.viewDidLoad()
 
-        txtInputMakeSuggestion.textChanges()
-            .map { it.toString() }
-            .subscribe {
-                viewModel.input.sendSuggestion(it)
-            }.addTo(compositeDisposable)
+//        txtInputMakeSuggestion.textChanges()
+//            .map { it.toString() }
+//            .subscribe {
+//                viewModel.input.sendSuggestion(it)
+//            }.addTo(compositeDisposable)
 
     }
 

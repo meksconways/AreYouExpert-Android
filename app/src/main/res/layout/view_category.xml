@@ -2,36 +2,40 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:elevation="0dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:elevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="H,4:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.narayanacharya.waveview.WaveView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintDimensionRatio="H,10:2"
-            app:waveAmplitude="5.25"
-            app:waveBackgroundColor="@android:color/transparent"
-            app:waveColor="@color/whiteTranss"
-            android:alpha="0.1"
-            app:waveDensity="5.0"
-            app:waveFrequency="2.0"
-            app:waveNumberOfWaves="5"
-            app:wavePhaseShift="-0.01"
-            app:wavePrimaryLineWidth="3.0"
-            app:waveSecondaryLineWidth="1.0"
-            app:waveXAxisPositionMultiplier="0.5"
-            />
+<!--        <com.narayanacharya.waveview.WaveView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintDimensionRatio="H,10:2"-->
+<!--            app:waveAmplitude="5.25"-->
+<!--            app:waveBackgroundColor="@android:color/transparent"-->
+<!--            app:waveColor="@color/whiteTranss"-->
+<!--            android:alpha="0.1"-->
+<!--            app:waveDensity="5.0"-->
+<!--            app:waveFrequency="2.0"-->
+<!--            app:waveNumberOfWaves="5"-->
+<!--            app:wavePhaseShift="-0.01"-->
+<!--            app:wavePrimaryLineWidth="3.0"-->
+<!--            app:waveSecondaryLineWidth="1.0"-->
+<!--            app:waveXAxisPositionMultiplier="0.5"-->
+<!--            />-->
 
 
         <ImageView

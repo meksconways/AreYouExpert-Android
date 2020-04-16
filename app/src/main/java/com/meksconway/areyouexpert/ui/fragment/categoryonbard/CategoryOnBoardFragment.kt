@@ -1,24 +1,15 @@
 package com.meksconway.areyouexpert.ui.fragment.categoryonbard
 
-import android.os.Bundle
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelStore
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.meksconway.areyouexpert.R
 import com.meksconway.areyouexpert.base.BaseFragment
 import com.meksconway.areyouexpert.domain.usecase.CategoryModel
 import com.meksconway.areyouexpert.domain.usecase.CategoryOnBoardItem
-import com.meksconway.areyouexpert.extension.viewextension.gone
-import com.meksconway.areyouexpert.extension.viewextension.visible
 import com.meksconway.areyouexpert.ui.adapter.CategoryOnBoardAdapter
 import com.meksconway.areyouexpert.ui.fragment.quiz.QuizFragment
-import com.meksconway.areyouexpert.ui.fragment.quiz.QuizViewModel
 import com.meksconway.areyouexpert.util.Res
 import com.meksconway.areyouexpert.util.Status.*
 import com.meksconway.areyouexpert.util.ToolbarConfigration
@@ -52,7 +43,7 @@ class CategoryOnBoardFragment :
     override fun viewDidLoad() {
         super.viewDidLoad()
         arguments?.let {
-            it.getParcelable<CategoryModel>("category")?.let {categoryModel ->
+            it.getParcelable<CategoryModel>("category")?.let { categoryModel ->
                 //viewModel.input.getContent(categoryModel)
             }
         }
@@ -83,6 +74,7 @@ class CategoryOnBoardFragment :
             SUCCESS -> {
                 hideLoading()
                 setAdapter(resource.data)
+
             }
             LOADING -> {
                 showLoading()
@@ -92,6 +84,7 @@ class CategoryOnBoardFragment :
             }
         }
     }
+
 
     private fun setAdapter(data: List<CategoryOnBoardItem>?) {
         adapter.setItems(data)

@@ -86,7 +86,7 @@ class HomeUseCase
                 bannerId = 1,
                 bannerImage = R.drawable.welcome_image,
                 bannerGradient = R.drawable.gredient_yoda,
-                bannerTitle = "Hey Man!",
+                bannerTitle = "Stay Home And Solve Questions",
                 category = BannerCategory.WELCOME
 
             )

@@ -13,7 +13,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
         app:spanCount="2"
-        android:paddingStart="4dp"
+        android:paddingStart="8dp"
         android:paddingEnd="32dp"
         android:paddingTop="16dp"
         android:clipToPadding="false"
